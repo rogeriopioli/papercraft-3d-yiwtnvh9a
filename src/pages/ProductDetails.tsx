@@ -1,6 +1,14 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ChevronRight, Clock, FileText, Maximize, ShoppingBag, Star } from 'lucide-react'
+import {
+  ChevronRight,
+  Clock,
+  FileText,
+  Maximize,
+  ShoppingBag,
+  Star,
+  PlayCircle,
+} from 'lucide-react'
 import { products } from '@/data/products'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -13,11 +21,26 @@ import NotFound from './NotFound'
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>()
   const product = products.find((p) => p.id === id)
-  const [activeImg, setActiveImg] = useState(0)
   const { addItem } = useCartStore()
   const { toast } = useToast()
 
+  const mediaList = useMemo(() => {
+    if (!product) return []
+    const list: { type: 'image' | 'video'; url: string }[] = product.images.map((url) => ({
+      type: 'image',
+      url,
+    }))
+    if (product.video) {
+      list.push({ type: 'video', url: product.video })
+    }
+    return list
+  }, [product])
+
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
+
   if (!product) return <NotFound />
+
+  const activeMedia = mediaList[activeMediaIndex]
 
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
@@ -29,6 +52,22 @@ export default function ProductDetails() {
       title: 'Adicionado ao carrinho!',
       description: `${product.title} foi adicionado.`,
     })
+  }
+
+  const getVideoEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/watch?v=')) {
+      const videoId = new URLSearchParams(url.split('?')[1]).get('v')
+      return `https://www.youtube.com/embed/${videoId}`
+    }
+    if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1].split('?')[0]
+      return `https://www.youtube.com/embed/${videoId}`
+    }
+    if (url.includes('vimeo.com/')) {
+      const videoId = url.split('vimeo.com/')[1].split('?')[0]
+      return `https://player.vimeo.com/video/${videoId}`
+    }
+    return url
   }
 
   return (
@@ -49,23 +88,54 @@ export default function ProductDetails() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
         {/* Gallery */}
         <div className="space-y-4">
-          <div className="aspect-square bg-muted rounded-2xl overflow-hidden relative border shadow-subtle">
-            <img
-              src={product.images[activeImg]}
-              alt={product.title}
-              className="w-full h-full object-cover animate-fade-in"
-              key={activeImg}
-            />
+          <div className="aspect-square bg-muted rounded-2xl overflow-hidden relative border shadow-subtle flex items-center justify-center">
+            {activeMedia.type === 'image' ? (
+              <img
+                src={activeMedia.url}
+                alt={product.title}
+                className="w-full h-full object-cover animate-fade-in"
+                key={activeMedia.url}
+              />
+            ) : activeMedia.url.endsWith('.mp4') || activeMedia.url.endsWith('.webm') ? (
+              <video
+                src={activeMedia.url}
+                controls
+                className="w-full h-full object-cover animate-fade-in"
+                key={activeMedia.url}
+              />
+            ) : (
+              <iframe
+                src={getVideoEmbedUrl(activeMedia.url)}
+                className="w-full h-full animate-fade-in"
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                key={activeMedia.url}
+                title={`${product.title} Video`}
+              />
+            )}
           </div>
-          {product.images.length > 1 && (
+          {mediaList.length > 1 && (
             <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-              {product.images.map((img, idx) => (
+              {mediaList.map((media, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setActiveImg(idx)}
-                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${activeImg === idx ? 'border-primary opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                  onClick={() => setActiveMediaIndex(idx)}
+                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all shrink-0 bg-muted flex items-center justify-center group ${
+                    activeMediaIndex === idx
+                      ? 'border-primary opacity-100'
+                      : 'border-transparent opacity-60 hover:opacity-100'
+                  }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  {media.type === 'image' ? (
+                    <img src={media.url} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-muted-foreground w-full h-full bg-secondary/50 transition-colors group-hover:bg-secondary">
+                      <PlayCircle className="w-6 h-6 mb-1 text-primary" />
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-primary">
+                        Vídeo
+                      </span>
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
@@ -156,6 +226,13 @@ export default function ProductDetails() {
             </Button>
             <p className="text-center text-xs text-muted-foreground mt-3">
               Download imediato após a confirmação do pagamento.
+            </p>
+            <p className="text-center text-xs text-muted-foreground mt-2 px-4">
+              Ao adquirir, você concorda com nossos{' '}
+              <Link to="/termos" className="text-primary hover:underline font-medium">
+                Termos de Uso e Licença
+              </Link>
+              .
             </p>
           </div>
         </div>

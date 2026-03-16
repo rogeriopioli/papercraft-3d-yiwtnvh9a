@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Heart, Instagram, Mail, Twitter } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -74,9 +75,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  Termos de Uso
-                </a>
+                <Link to="/termos" className="hover:text-primary transition-colors">
+                  Termos de Uso e Licença
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-colors">

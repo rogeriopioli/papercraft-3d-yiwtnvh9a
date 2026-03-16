@@ -5,6 +5,7 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 import Index from './pages/Index'
 import NotFound from './pages/NotFound'
 import ProductDetails from './pages/ProductDetails'
+import Terms from './pages/Terms'
 import Layout from './components/Layout'
 import { CartProvider } from './stores/useCartStore'
 
@@ -18,6 +19,7 @@ const App = () => (
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/termos" element={<Terms />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

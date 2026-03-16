@@ -5,6 +5,7 @@ export interface Product {
   category: string
   difficulty: number // 1 to 5
   images: string[]
+  video?: string
   description: string
   specs: {
     sheets: number
@@ -37,6 +38,7 @@ export const products: Product[] = [
       'https://img.usecurling.com/p/800/800?q=lowpoly+deer+head+papercraft&color=orange',
       'https://img.usecurling.com/p/800/800?q=papercraft+deer+wall+art&color=white',
     ],
+    video: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     description:
       'Um impressionante troféu de parede em formato de cervo. Perfeito para decoração de salas modernas e escritórios. O arquivo PDF contém todas as peças numeradas e instruções detalhadas passo a passo.',
     specs: { sheets: 12, time: '4-6 horas', dimensions: '45 x 30 x 25 cm' },
@@ -54,6 +56,7 @@ export const products: Product[] = [
       'https://img.usecurling.com/p/800/800?q=lowpoly+fox+papercraft&color=orange',
       'https://img.usecurling.com/p/800/800?q=origami+fox+3d&color=orange',
     ],
+    video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     description:
       'Uma raposa sentada minimalista. Ótima para iniciantes no mundo do papercraft. Fica linda na mesa do escritório ou na estante da sala.',
     specs: { sheets: 5, time: '2-3 horas', dimensions: '20 x 15 x 18 cm' },

@@ -19049,6 +19049,15 @@ var ChevronUp = createLucideIcon("chevron-up", [["path", {
 	d: "m18 15-6-6-6 6",
 	key: "153udz"
 }]]);
+var CirclePlay = createLucideIcon("circle-play", [["path", {
+	d: "M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z",
+	key: "kmsa83"
+}], ["circle", {
+	cx: "12",
+	cy: "12",
+	r: "10",
+	key: "1mglay"
+}]]);
 var Clock = createLucideIcon("clock", [["circle", {
 	cx: "12",
 	cy: "12",
@@ -24219,6 +24228,7 @@ var products = [
 		category: "Animais",
 		difficulty: 3,
 		images: ["https://img.usecurling.com/p/800/800?q=lowpoly+deer+head+papercraft&color=orange", "https://img.usecurling.com/p/800/800?q=papercraft+deer+wall+art&color=white"],
+		video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 		description: "Um impressionante troféu de parede em formato de cervo. Perfeito para decoração de salas modernas e escritórios. O arquivo PDF contém todas as peças numeradas e instruções detalhadas passo a passo.",
 		specs: {
 			sheets: 12,
@@ -24240,6 +24250,7 @@ var products = [
 		category: "Animais",
 		difficulty: 2,
 		images: ["https://img.usecurling.com/p/800/800?q=lowpoly+fox+papercraft&color=orange", "https://img.usecurling.com/p/800/800?q=origami+fox+3d&color=orange"],
+		video: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
 		description: "Uma raposa sentada minimalista. Ótima para iniciantes no mundo do papercraft. Fica linda na mesa do escritório ou na estante da sala.",
 		specs: {
 			sheets: 5,
@@ -24626,42 +24637,49 @@ function ProductCard({ product, className }) {
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-uid": "src/components/ProductCard.tsx:33:9",
 				"data-prohibitions": "[editContent]",
-				className: "relative aspect-square overflow-hidden bg-muted",
+				className: "relative aspect-square overflow-hidden bg-muted group/image",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 						"data-uid": "src/components/ProductCard.tsx:34:11",
 						"data-prohibitions": "[editContent]",
 						src: product.images[0],
 						alt: product.title,
-						className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+						className: cn$1("absolute inset-0 w-full h-full object-cover transition-all duration-500", product.images.length > 1 ? "group-hover/image:opacity-0 group-hover/image:scale-110" : "group-hover/image:scale-105")
+					}),
+					product.images.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+						"data-uid": "src/components/ProductCard.tsx:45:13",
+						"data-prohibitions": "[editContent]",
+						src: product.images[1],
+						alt: `${product.title} - Vista Alternativa`,
+						className: "absolute inset-0 w-full h-full object-cover opacity-0 scale-95 transition-all duration-500 group-hover/image:opacity-100 group-hover/image:scale-105"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/ProductCard.tsx:40:11",
+						"data-uid": "src/components/ProductCard.tsx:52:11",
 						"data-prohibitions": "[editContent]",
 						className: "absolute top-3 left-3 flex flex-col gap-2",
 						children: [product.isNew && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, {
-							"data-uid": "src/components/ProductCard.tsx:42:15",
+							"data-uid": "src/components/ProductCard.tsx:54:15",
 							"data-prohibitions": "[]",
 							className: "bg-blue-500 hover:bg-blue-600 border-none",
 							children: "Novo"
 						}), product.isBestSeller && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, {
-							"data-uid": "src/components/ProductCard.tsx:45:15",
+							"data-uid": "src/components/ProductCard.tsx:57:15",
 							"data-prohibitions": "[]",
 							className: "bg-primary hover:bg-primary/90 border-none",
 							children: "Mais Vendido"
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						"data-uid": "src/components/ProductCard.tsx:49:11",
+						"data-uid": "src/components/ProductCard.tsx:61:11",
 						"data-prohibitions": "[]",
-						className: "absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent flex justify-center",
+						className: "absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover/image:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent flex justify-center",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-							"data-uid": "src/components/ProductCard.tsx:50:13",
+							"data-uid": "src/components/ProductCard.tsx:62:13",
 							"data-prohibitions": "[]",
 							className: "w-full shadow-lg",
 							onClick: handleAddToCart,
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShoppingBag, {
-								"data-uid": "src/components/ProductCard.tsx:51:15",
+								"data-uid": "src/components/ProductCard.tsx:63:15",
 								"data-prohibitions": "[editContent]",
 								className: "w-4 h-4 mr-2"
 							}), " Adicionar"]
@@ -24669,51 +24687,51 @@ function ProductCard({ product, className }) {
 					})
 				]
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardContent, {
-				"data-uid": "src/components/ProductCard.tsx:56:9",
+				"data-uid": "src/components/ProductCard.tsx:68:9",
 				"data-prohibitions": "[editContent]",
 				className: "p-4 flex flex-col flex-1",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/ProductCard.tsx:57:11",
+						"data-uid": "src/components/ProductCard.tsx:69:11",
 						"data-prohibitions": "[editContent]",
 						className: "flex justify-between items-start mb-2 gap-2",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							"data-uid": "src/components/ProductCard.tsx:58:13",
+							"data-uid": "src/components/ProductCard.tsx:70:13",
 							"data-prohibitions": "[editContent]",
 							className: "font-heading font-semibold text-base leading-tight text-foreground line-clamp-2",
 							children: product.title
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/components/ProductCard.tsx:61:13",
+							"data-uid": "src/components/ProductCard.tsx:73:13",
 							"data-prohibitions": "[editContent]",
 							className: "flex items-center text-amber-500 shrink-0 bg-amber-50 px-1.5 py-0.5 rounded text-xs font-medium",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, {
-								"data-uid": "src/components/ProductCard.tsx:62:15",
+								"data-uid": "src/components/ProductCard.tsx:74:15",
 								"data-prohibitions": "[editContent]",
 								className: "w-3 h-3 fill-current mr-1"
 							}), product.rating]
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						"data-uid": "src/components/ProductCard.tsx:67:11",
+						"data-uid": "src/components/ProductCard.tsx:79:11",
 						"data-prohibitions": "[editContent]",
 						className: "text-sm text-muted-foreground mb-3",
 						children: product.category
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/ProductCard.tsx:69:11",
+						"data-uid": "src/components/ProductCard.tsx:81:11",
 						"data-prohibitions": "[editContent]",
 						className: "mt-auto flex items-center justify-between",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							"data-uid": "src/components/ProductCard.tsx:70:13",
+							"data-uid": "src/components/ProductCard.tsx:82:13",
 							"data-prohibitions": "[editContent]",
 							className: "font-bold text-lg text-primary",
 							children: ["R$ ", product.price.toFixed(2).replace(".", ",")]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							"data-uid": "src/components/ProductCard.tsx:73:13",
+							"data-uid": "src/components/ProductCard.tsx:85:13",
 							"data-prohibitions": "[editContent]",
 							className: "flex gap-1",
 							children: [...Array(5)].map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								"data-uid": "src/components/ProductCard.tsx:75:17",
+								"data-uid": "src/components/ProductCard.tsx:87:17",
 								"data-prohibitions": "[editContent]",
 								className: cn$1("w-1.5 h-1.5 rounded-full", i < product.difficulty ? "bg-secondary" : "bg-muted"),
 								title: `Dificuldade: ${product.difficulty}/5`
@@ -28209,13 +28227,26 @@ Separator.displayName = Root$1.displayName;
 function ProductDetails() {
 	const { id } = useParams();
 	const product = products.find((p) => p.id === id);
-	const [activeImg, setActiveImg] = (0, import_react.useState)(0);
 	const { addItem } = useCartStore();
 	const { toast } = useToast();
+	const mediaList = (0, import_react.useMemo)(() => {
+		if (!product) return [];
+		const list = product.images.map((url) => ({
+			type: "image",
+			url
+		}));
+		if (product.video) list.push({
+			type: "video",
+			url: product.video
+		});
+		return list;
+	}, [product]);
+	const [activeMediaIndex, setActiveMediaIndex] = (0, import_react.useState)(0);
 	if (!product) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NotFound, {
-		"data-uid": "src/pages/ProductDetails.tsx:20:24",
+		"data-uid": "src/pages/ProductDetails.tsx:41:24",
 		"data-prohibitions": "[editContent]"
 	});
+	const activeMedia = mediaList[activeMediaIndex];
 	const relatedProducts = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
 	const handleAddToCart = () => {
 		addItem(product);
@@ -28224,42 +28255,48 @@ function ProductDetails() {
 			description: `${product.title} foi adicionado.`
 		});
 	};
+	const getVideoEmbedUrl = (url) => {
+		if (url.includes("youtube.com/watch?v=")) return `https://www.youtube.com/embed/${new URLSearchParams(url.split("?")[1]).get("v")}`;
+		if (url.includes("youtu.be/")) return `https://www.youtube.com/embed/${url.split("youtu.be/")[1].split("?")[0]}`;
+		if (url.includes("vimeo.com/")) return `https://player.vimeo.com/video/${url.split("vimeo.com/")[1].split("?")[0]}`;
+		return url;
+	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		"data-uid": "src/pages/ProductDetails.tsx:35:5",
+		"data-uid": "src/pages/ProductDetails.tsx:74:5",
 		"data-prohibitions": "[editContent]",
 		className: "container mx-auto px-4 py-8",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-				"data-uid": "src/pages/ProductDetails.tsx:37:7",
+				"data-uid": "src/pages/ProductDetails.tsx:76:7",
 				"data-prohibitions": "[editContent]",
 				className: "flex items-center text-sm text-muted-foreground mb-8",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						"data-uid": "src/pages/ProductDetails.tsx:38:9",
+						"data-uid": "src/pages/ProductDetails.tsx:77:9",
 						"data-prohibitions": "[]",
 						to: "/",
 						className: "hover:text-primary transition-colors",
 						children: "Home"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, {
-						"data-uid": "src/pages/ProductDetails.tsx:41:9",
+						"data-uid": "src/pages/ProductDetails.tsx:80:9",
 						"data-prohibitions": "[editContent]",
 						className: "w-4 h-4 mx-1"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						"data-uid": "src/pages/ProductDetails.tsx:42:9",
+						"data-uid": "src/pages/ProductDetails.tsx:81:9",
 						"data-prohibitions": "[editContent]",
 						to: "/",
 						className: "hover:text-primary transition-colors",
 						children: product.category
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, {
-						"data-uid": "src/pages/ProductDetails.tsx:45:9",
+						"data-uid": "src/pages/ProductDetails.tsx:84:9",
 						"data-prohibitions": "[editContent]",
 						className: "w-4 h-4 mx-1"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						"data-uid": "src/pages/ProductDetails.tsx:46:9",
+						"data-uid": "src/pages/ProductDetails.tsx:85:9",
 						"data-prohibitions": "[editContent]",
 						className: "text-foreground font-medium truncate",
 						children: product.title
@@ -28267,71 +28304,99 @@ function ProductDetails() {
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/pages/ProductDetails.tsx:49:7",
+				"data-uid": "src/pages/ProductDetails.tsx:88:7",
 				"data-prohibitions": "[editContent]",
 				className: "grid grid-cols-1 md:grid-cols-2 gap-12 mb-16",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/ProductDetails.tsx:51:9",
+					"data-uid": "src/pages/ProductDetails.tsx:90:9",
 					"data-prohibitions": "[editContent]",
 					className: "space-y-4",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						"data-uid": "src/pages/ProductDetails.tsx:52:11",
-						"data-prohibitions": "[]",
-						className: "aspect-square bg-muted rounded-2xl overflow-hidden relative border shadow-subtle",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-							"data-uid": "src/pages/ProductDetails.tsx:53:13",
+						"data-uid": "src/pages/ProductDetails.tsx:91:11",
+						"data-prohibitions": "[editContent]",
+						className: "aspect-square bg-muted rounded-2xl overflow-hidden relative border shadow-subtle flex items-center justify-center",
+						children: activeMedia.type === "image" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+							"data-uid": "src/pages/ProductDetails.tsx:93:15",
 							"data-prohibitions": "[editContent]",
-							src: product.images[activeImg],
+							src: activeMedia.url,
 							alt: product.title,
 							className: "w-full h-full object-cover animate-fade-in"
-						}, activeImg)
-					}), product.images.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						"data-uid": "src/pages/ProductDetails.tsx:61:13",
+						}, activeMedia.url) : activeMedia.url.endsWith(".mp4") || activeMedia.url.endsWith(".webm") ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("video", {
+							"data-uid": "src/pages/ProductDetails.tsx:100:15",
+							"data-prohibitions": "[editContent]",
+							src: activeMedia.url,
+							controls: true,
+							className: "w-full h-full object-cover animate-fade-in"
+						}, activeMedia.url) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("iframe", {
+							"data-uid": "src/pages/ProductDetails.tsx:107:15",
+							"data-prohibitions": "[editContent]",
+							src: getVideoEmbedUrl(activeMedia.url),
+							className: "w-full h-full animate-fade-in",
+							allowFullScreen: true,
+							allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+							title: `${product.title} Video`
+						}, activeMedia.url)
+					}), mediaList.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						"data-uid": "src/pages/ProductDetails.tsx:118:13",
 						"data-prohibitions": "[editContent]",
 						className: "flex gap-4 overflow-x-auto hide-scrollbar pb-2",
-						children: product.images.map((img, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							"data-uid": "src/pages/ProductDetails.tsx:63:17",
+						children: mediaList.map((media, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							"data-uid": "src/pages/ProductDetails.tsx:120:17",
 							"data-prohibitions": "[editContent]",
-							onClick: () => setActiveImg(idx),
-							className: `w-20 h-20 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${activeImg === idx ? "border-primary opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`,
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-								"data-uid": "src/pages/ProductDetails.tsx:68:19",
+							onClick: () => setActiveMediaIndex(idx),
+							className: `w-20 h-20 rounded-lg overflow-hidden border-2 transition-all shrink-0 bg-muted flex items-center justify-center group ${activeMediaIndex === idx ? "border-primary opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`,
+							children: media.type === "image" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+								"data-uid": "src/pages/ProductDetails.tsx:130:21",
 								"data-prohibitions": "[editContent]",
-								src: img,
+								src: media.url,
 								alt: "",
 								className: "w-full h-full object-cover"
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								"data-uid": "src/pages/ProductDetails.tsx:132:21",
+								"data-prohibitions": "[]",
+								className: "flex flex-col items-center justify-center text-muted-foreground w-full h-full bg-secondary/50 transition-colors group-hover:bg-secondary",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CirclePlay, {
+									"data-uid": "src/pages/ProductDetails.tsx:133:23",
+									"data-prohibitions": "[editContent]",
+									className: "w-6 h-6 mb-1 text-primary"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									"data-uid": "src/pages/ProductDetails.tsx:134:23",
+									"data-prohibitions": "[]",
+									className: "text-[9px] font-bold uppercase tracking-wider text-primary",
+									children: "Vídeo"
+								})]
 							})
 						}, idx))
 					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/ProductDetails.tsx:76:9",
+					"data-uid": "src/pages/ProductDetails.tsx:146:9",
 					"data-prohibitions": "[editContent]",
 					className: "flex flex-col",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/pages/ProductDetails.tsx:77:11",
+							"data-uid": "src/pages/ProductDetails.tsx:147:11",
 							"data-prohibitions": "[editContent]",
 							className: "mb-6",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-								"data-uid": "src/pages/ProductDetails.tsx:78:13",
+								"data-uid": "src/pages/ProductDetails.tsx:148:13",
 								"data-prohibitions": "[editContent]",
 								className: "text-3xl md:text-4xl font-heading font-bold mb-3 text-foreground",
 								children: product.title
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/pages/ProductDetails.tsx:81:13",
+								"data-uid": "src/pages/ProductDetails.tsx:151:13",
 								"data-prohibitions": "[editContent]",
 								className: "flex items-center gap-4",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									"data-uid": "src/pages/ProductDetails.tsx:82:15",
+									"data-uid": "src/pages/ProductDetails.tsx:152:15",
 									"data-prohibitions": "[editContent]",
 									className: "text-3xl font-bold text-primary",
 									children: ["R$ ", product.price.toFixed(2).replace(".", ",")]
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/ProductDetails.tsx:85:15",
+									"data-uid": "src/pages/ProductDetails.tsx:155:15",
 									"data-prohibitions": "[editContent]",
 									className: "flex items-center bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-sm font-medium",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, {
-										"data-uid": "src/pages/ProductDetails.tsx:86:17",
+										"data-uid": "src/pages/ProductDetails.tsx:156:17",
 										"data-prohibitions": "[editContent]",
 										className: "w-4 h-4 text-amber-400 fill-current mr-1"
 									}), product.rating]
@@ -28339,55 +28404,55 @@ function ProductDetails() {
 							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/pages/ProductDetails.tsx:92:11",
+							"data-uid": "src/pages/ProductDetails.tsx:162:11",
 							"data-prohibitions": "[editContent]",
 							className: "flex flex-wrap gap-2 mb-6",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, {
-								"data-uid": "src/pages/ProductDetails.tsx:93:13",
+								"data-uid": "src/pages/ProductDetails.tsx:163:13",
 								"data-prohibitions": "[]",
 								variant: "secondary",
 								children: "PDF Digital"
 							}), product.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, {
-								"data-uid": "src/pages/ProductDetails.tsx:95:15",
+								"data-uid": "src/pages/ProductDetails.tsx:165:15",
 								"data-prohibitions": "[editContent]",
 								variant: "outline",
 								children: tag
 							}, tag))]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							"data-uid": "src/pages/ProductDetails.tsx:101:11",
+							"data-uid": "src/pages/ProductDetails.tsx:171:11",
 							"data-prohibitions": "[editContent]",
 							className: "text-muted-foreground leading-relaxed mb-8 text-lg",
 							children: product.description
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/pages/ProductDetails.tsx:105:11",
+							"data-uid": "src/pages/ProductDetails.tsx:175:11",
 							"data-prohibitions": "[editContent]",
 							className: "bg-card border rounded-xl p-5 mb-8 shadow-subtle grid grid-cols-2 gap-y-6",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/ProductDetails.tsx:106:13",
+									"data-uid": "src/pages/ProductDetails.tsx:176:13",
 									"data-prohibitions": "[editContent]",
 									className: "flex items-center gap-3",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:107:15",
+										"data-uid": "src/pages/ProductDetails.tsx:177:15",
 										"data-prohibitions": "[]",
 										className: "p-2 bg-muted rounded-lg",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FileText, {
-											"data-uid": "src/pages/ProductDetails.tsx:108:17",
+											"data-uid": "src/pages/ProductDetails.tsx:178:17",
 											"data-prohibitions": "[editContent]",
 											className: "w-5 h-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:110:15",
+										"data-uid": "src/pages/ProductDetails.tsx:180:15",
 										"data-prohibitions": "[editContent]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:111:17",
+											"data-uid": "src/pages/ProductDetails.tsx:181:17",
 											"data-prohibitions": "[]",
 											className: "text-xs text-muted-foreground",
 											children: "Folhas A4"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:112:17",
+											"data-uid": "src/pages/ProductDetails.tsx:182:17",
 											"data-prohibitions": "[editContent]",
 											className: "font-medium",
 											children: product.specs.sheets
@@ -28395,28 +28460,28 @@ function ProductDetails() {
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/ProductDetails.tsx:115:13",
+									"data-uid": "src/pages/ProductDetails.tsx:185:13",
 									"data-prohibitions": "[editContent]",
 									className: "flex items-center gap-3",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:116:15",
+										"data-uid": "src/pages/ProductDetails.tsx:186:15",
 										"data-prohibitions": "[]",
 										className: "p-2 bg-muted rounded-lg",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Clock, {
-											"data-uid": "src/pages/ProductDetails.tsx:117:17",
+											"data-uid": "src/pages/ProductDetails.tsx:187:17",
 											"data-prohibitions": "[editContent]",
 											className: "w-5 h-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:119:15",
+										"data-uid": "src/pages/ProductDetails.tsx:189:15",
 										"data-prohibitions": "[editContent]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:120:17",
+											"data-uid": "src/pages/ProductDetails.tsx:190:17",
 											"data-prohibitions": "[]",
 											className: "text-xs text-muted-foreground",
 											children: "Tempo Estimado"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:121:17",
+											"data-uid": "src/pages/ProductDetails.tsx:191:17",
 											"data-prohibitions": "[editContent]",
 											className: "font-medium",
 											children: product.specs.time
@@ -28424,28 +28489,28 @@ function ProductDetails() {
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/ProductDetails.tsx:124:13",
+									"data-uid": "src/pages/ProductDetails.tsx:194:13",
 									"data-prohibitions": "[editContent]",
 									className: "flex items-center gap-3",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:125:15",
+										"data-uid": "src/pages/ProductDetails.tsx:195:15",
 										"data-prohibitions": "[]",
 										className: "p-2 bg-muted rounded-lg",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Maximize, {
-											"data-uid": "src/pages/ProductDetails.tsx:126:17",
+											"data-uid": "src/pages/ProductDetails.tsx:196:17",
 											"data-prohibitions": "[editContent]",
 											className: "w-5 h-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:128:15",
+										"data-uid": "src/pages/ProductDetails.tsx:198:15",
 										"data-prohibitions": "[editContent]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:129:17",
+											"data-uid": "src/pages/ProductDetails.tsx:199:17",
 											"data-prohibitions": "[]",
 											className: "text-xs text-muted-foreground",
 											children: "Dimensões"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:130:17",
+											"data-uid": "src/pages/ProductDetails.tsx:200:17",
 											"data-prohibitions": "[editContent]",
 											className: "font-medium",
 											children: product.specs.dimensions
@@ -28453,28 +28518,28 @@ function ProductDetails() {
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/ProductDetails.tsx:133:13",
+									"data-uid": "src/pages/ProductDetails.tsx:203:13",
 									"data-prohibitions": "[editContent]",
 									className: "flex items-center gap-3",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:134:15",
+										"data-uid": "src/pages/ProductDetails.tsx:204:15",
 										"data-prohibitions": "[editContent]",
 										className: "flex gap-1 bg-muted p-2 rounded-lg items-center",
 										children: [...Array(5)].map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-											"data-uid": "src/pages/ProductDetails.tsx:136:19",
+											"data-uid": "src/pages/ProductDetails.tsx:206:19",
 											"data-prohibitions": "[editContent]",
 											className: `w-1.5 h-1.5 rounded-full ${i < product.difficulty ? "bg-primary" : "bg-muted-foreground/30"}`
 										}, i))
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/ProductDetails.tsx:142:15",
+										"data-uid": "src/pages/ProductDetails.tsx:212:15",
 										"data-prohibitions": "[editContent]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:143:17",
+											"data-uid": "src/pages/ProductDetails.tsx:213:17",
 											"data-prohibitions": "[]",
 											className: "text-xs text-muted-foreground",
 											children: "Dificuldade"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											"data-uid": "src/pages/ProductDetails.tsx:144:17",
+											"data-uid": "src/pages/ProductDetails.tsx:214:17",
 											"data-prohibitions": "[editContent]",
 											className: "font-medium",
 											children: ["Nível ", product.difficulty]
@@ -28484,52 +28549,342 @@ function ProductDetails() {
 							]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/pages/ProductDetails.tsx:149:11",
+							"data-uid": "src/pages/ProductDetails.tsx:219:11",
 							"data-prohibitions": "[]",
 							className: "mt-auto md:sticky md:bottom-8 z-20 bg-background/80 backdrop-blur-md p-4 md:p-0 rounded-2xl md:bg-transparent -mx-4 md:mx-0 shadow-elevation md:shadow-none border-t md:border-none",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-								"data-uid": "src/pages/ProductDetails.tsx:150:13",
-								"data-prohibitions": "[]",
-								size: "lg",
-								className: "w-full text-lg h-14 hover:scale-[1.02] transition-transform active:scale-95",
-								onClick: handleAddToCart,
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShoppingBag, {
-									"data-uid": "src/pages/ProductDetails.tsx:155:15",
-									"data-prohibitions": "[editContent]",
-									className: "w-5 h-5 mr-2"
-								}), " Adicionar ao Carrinho"]
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								"data-uid": "src/pages/ProductDetails.tsx:157:13",
-								"data-prohibitions": "[]",
-								className: "text-center text-xs text-muted-foreground mt-3",
-								children: "Download imediato após a confirmação do pagamento."
-							})]
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+									"data-uid": "src/pages/ProductDetails.tsx:220:13",
+									"data-prohibitions": "[]",
+									size: "lg",
+									className: "w-full text-lg h-14 hover:scale-[1.02] transition-transform active:scale-95",
+									onClick: handleAddToCart,
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShoppingBag, {
+										"data-uid": "src/pages/ProductDetails.tsx:225:15",
+										"data-prohibitions": "[editContent]",
+										className: "w-5 h-5 mr-2"
+									}), " Adicionar ao Carrinho"]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									"data-uid": "src/pages/ProductDetails.tsx:227:13",
+									"data-prohibitions": "[]",
+									className: "text-center text-xs text-muted-foreground mt-3",
+									children: "Download imediato após a confirmação do pagamento."
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+									"data-uid": "src/pages/ProductDetails.tsx:230:13",
+									"data-prohibitions": "[]",
+									className: "text-center text-xs text-muted-foreground mt-2 px-4",
+									children: [
+										"Ao adquirir, você concorda com nossos",
+										" ",
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+											"data-uid": "src/pages/ProductDetails.tsx:232:15",
+											"data-prohibitions": "[]",
+											to: "/termos",
+											className: "text-primary hover:underline font-medium",
+											children: "Termos de Uso e Licença"
+										}),
+										"."
+									]
+								})
+							]
 						})
 					]
 				})]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
-				"data-uid": "src/pages/ProductDetails.tsx:164:7",
+				"data-uid": "src/pages/ProductDetails.tsx:241:7",
 				"data-prohibitions": "[editContent]",
 				className: "my-16"
 			}),
 			relatedProducts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-				"data-uid": "src/pages/ProductDetails.tsx:168:9",
+				"data-uid": "src/pages/ProductDetails.tsx:245:9",
 				"data-prohibitions": "[editContent]",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-					"data-uid": "src/pages/ProductDetails.tsx:169:11",
+					"data-uid": "src/pages/ProductDetails.tsx:246:11",
 					"data-prohibitions": "[]",
 					className: "text-2xl font-heading font-bold mb-6",
 					children: "Você também pode gostar"
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					"data-uid": "src/pages/ProductDetails.tsx:170:11",
+					"data-uid": "src/pages/ProductDetails.tsx:247:11",
 					"data-prohibitions": "[editContent]",
 					className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6",
 					children: relatedProducts.map((product) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProductCard, {
-						"data-uid": "src/pages/ProductDetails.tsx:172:15",
+						"data-uid": "src/pages/ProductDetails.tsx:249:15",
 						"data-prohibitions": "[editContent]",
 						product
 					}, product.id))
+				})]
+			})
+		]
+	});
+}
+//#endregion
+//#region src/pages/Terms.tsx
+function Terms() {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		"data-uid": "src/pages/Terms.tsx:7:5",
+		"data-prohibitions": "[editContent]",
+		className: "container mx-auto px-4 py-8 max-w-5xl",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
+				"data-uid": "src/pages/Terms.tsx:8:7",
+				"data-prohibitions": "[]",
+				className: "flex items-center text-sm text-muted-foreground mb-8",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+						"data-uid": "src/pages/Terms.tsx:9:9",
+						"data-prohibitions": "[]",
+						to: "/",
+						className: "hover:text-primary transition-colors",
+						children: "Home"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, {
+						"data-uid": "src/pages/Terms.tsx:12:9",
+						"data-prohibitions": "[editContent]",
+						className: "w-4 h-4 mx-1"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						"data-uid": "src/pages/Terms.tsx:13:9",
+						"data-prohibitions": "[]",
+						className: "text-foreground font-medium truncate",
+						children: "Termos de Uso e Licença"
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				"data-uid": "src/pages/Terms.tsx:16:7",
+				"data-prohibitions": "[]",
+				className: "mb-12",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+					"data-uid": "src/pages/Terms.tsx:17:9",
+					"data-prohibitions": "[]",
+					className: "text-3xl md:text-5xl font-heading font-bold mb-4 text-foreground",
+					children: "Termos de Uso e Licença"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					"data-uid": "src/pages/Terms.tsx:20:9",
+					"data-prohibitions": "[]",
+					className: "text-lg text-muted-foreground",
+					children: "License and Terms of Use for PaperCraft Hub digital products."
+				})]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				"data-uid": "src/pages/Terms.tsx:25:7",
+				"data-prohibitions": "[editContent]",
+				className: "grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					"data-uid": "src/pages/Terms.tsx:27:9",
+					"data-prohibitions": "[]",
+					className: "space-y-6",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"data-uid": "src/pages/Terms.tsx:28:11",
+							"data-prohibitions": "[]",
+							className: "inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-2",
+							children: "Português"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							"data-uid": "src/pages/Terms.tsx:31:11",
+							"data-prohibitions": "[]",
+							className: "text-foreground/80 leading-relaxed",
+							children: "Ao adquirir nossos modelos de papercraft 3D, você concorda com os seguintes termos:"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							"data-uid": "src/pages/Terms.tsx:35:11",
+							"data-prohibitions": "[]",
+							className: "space-y-4",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:36:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:37:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "1. Uso Pessoal"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+										"data-uid": "src/pages/Terms.tsx:40:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: [
+											"Os arquivos digitais (PDF, SVG, DXF, etc.) são estritamente para",
+											" ",
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
+												"data-uid": "src/pages/Terms.tsx:42:17",
+												"data-prohibitions": "[]",
+												children: "uso pessoal"
+											}),
+											". Você não tem permissão para revender, compartilhar, publicar ou distribuir os arquivos de qualquer forma."
+										]
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+									"data-uid": "src/pages/Terms.tsx:47:13",
+									"data-prohibitions": "[editContent]"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:49:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:50:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "2. Venda de Peças Físicas"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										"data-uid": "src/pages/Terms.tsx:53:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: "Você pode vender as esculturas físicas montadas a partir de nossos moldes, desde que sejam montadas por você mesmo em pequena escala. A produção em massa não é permitida sem uma licença comercial específica."
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+									"data-uid": "src/pages/Terms.tsx:60:13",
+									"data-prohibitions": "[editContent]"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:62:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:63:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "3. Modificações"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										"data-uid": "src/pages/Terms.tsx:66:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: "Você pode modificar os arquivos para seu próprio uso, mas os arquivos modificados ainda estão sujeitos a estas mesmas regras e não podem ser distribuídos."
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+									"data-uid": "src/pages/Terms.tsx:72:13",
+									"data-prohibitions": "[editContent]"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:74:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:75:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "4. Direitos Autorais"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										"data-uid": "src/pages/Terms.tsx:78:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: "Todos os designs e modelos são propriedades intelectuais protegidas. A compra do arquivo não transfere os direitos autorais para você."
+									})]
+								})
+							]
+						})
+					]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					"data-uid": "src/pages/Terms.tsx:87:9",
+					"data-prohibitions": "[]",
+					className: "space-y-6",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"data-uid": "src/pages/Terms.tsx:88:11",
+							"data-prohibitions": "[]",
+							className: "inline-block px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm font-semibold mb-2",
+							children: "English"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							"data-uid": "src/pages/Terms.tsx:91:11",
+							"data-prohibitions": "[]",
+							className: "text-foreground/80 leading-relaxed",
+							children: "By purchasing our 3D papercraft templates, you agree to the following terms:"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							"data-uid": "src/pages/Terms.tsx:95:11",
+							"data-prohibitions": "[]",
+							className: "space-y-4",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:96:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:97:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "1. Personal Use"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+										"data-uid": "src/pages/Terms.tsx:100:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: [
+											"The digital files (PDF, SVG, DXF, etc.) are strictly for",
+											" ",
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
+												"data-uid": "src/pages/Terms.tsx:102:17",
+												"data-prohibitions": "[]",
+												children: "personal use"
+											}),
+											". You are not allowed to resell, share, publish, or distribute the files in any way."
+										]
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+									"data-uid": "src/pages/Terms.tsx:107:13",
+									"data-prohibitions": "[editContent]"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:109:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:110:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "2. Selling Physical Items"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										"data-uid": "src/pages/Terms.tsx:113:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: "You may sell the physical sculptures assembled from our templates, provided they are hand-assembled by yourself on a small scale. Mass production is not allowed without a specific commercial license."
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+									"data-uid": "src/pages/Terms.tsx:120:13",
+									"data-prohibitions": "[editContent]"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:122:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:123:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "3. Modifications"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										"data-uid": "src/pages/Terms.tsx:126:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: "You may modify the files for your own use, but the modified files are still subject to these same rules and cannot be distributed."
+									})]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+									"data-uid": "src/pages/Terms.tsx:132:13",
+									"data-prohibitions": "[editContent]"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									"data-uid": "src/pages/Terms.tsx:134:13",
+									"data-prohibitions": "[]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+										"data-uid": "src/pages/Terms.tsx:135:15",
+										"data-prohibitions": "[]",
+										className: "text-xl font-heading font-semibold mb-2 text-foreground",
+										children: "4. Copyright"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										"data-uid": "src/pages/Terms.tsx:138:15",
+										"data-prohibitions": "[]",
+										className: "text-muted-foreground text-sm leading-relaxed",
+										children: "All designs and templates are protected intellectual property. Purchasing the file does not transfer the copyright to you."
+									})]
+								})
+							]
+						})
+					]
 				})]
 			})
 		]
@@ -29579,67 +29934,67 @@ function Header() {
 //#region src/components/Footer.tsx
 function Footer() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("footer", {
-		"data-uid": "src/components/Footer.tsx:7:5",
+		"data-uid": "src/components/Footer.tsx:8:5",
 		"data-prohibitions": "[]",
 		className: "bg-secondary text-secondary-foreground pt-16 pb-8",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			"data-uid": "src/components/Footer.tsx:8:7",
+			"data-uid": "src/components/Footer.tsx:9:7",
 			"data-prohibitions": "[]",
 			className: "container mx-auto px-4",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/Footer.tsx:9:9",
+				"data-uid": "src/components/Footer.tsx:10:9",
 				"data-prohibitions": "[]",
 				className: "grid grid-cols-1 md:grid-cols-4 gap-12 mb-12",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/Footer.tsx:10:11",
+						"data-uid": "src/components/Footer.tsx:11:11",
 						"data-prohibitions": "[]",
 						className: "col-span-1 md:col-span-1",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/components/Footer.tsx:11:13",
+								"data-uid": "src/components/Footer.tsx:12:13",
 								"data-prohibitions": "[]",
 								className: "flex items-center gap-2 mb-4",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Heart, {
-									"data-uid": "src/components/Footer.tsx:12:15",
+									"data-uid": "src/components/Footer.tsx:13:15",
 									"data-prohibitions": "[editContent]",
 									className: "w-6 h-6 text-primary fill-primary"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									"data-uid": "src/components/Footer.tsx:13:15",
+									"data-uid": "src/components/Footer.tsx:14:15",
 									"data-prohibitions": "[]",
 									className: "text-heading font-bold text-xl",
 									children: "PaperCraft Hub"
 								})]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								"data-uid": "src/components/Footer.tsx:15:13",
+								"data-uid": "src/components/Footer.tsx:16:13",
 								"data-prohibitions": "[]",
 								className: "text-secondary-foreground/70 text-sm mb-6",
 								children: "Dando vida ao papel com moldes 3D lowpoly incríveis. Faça você mesmo e decore seu mundo."
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/components/Footer.tsx:19:13",
+								"data-uid": "src/components/Footer.tsx:20:13",
 								"data-prohibitions": "[]",
 								className: "flex gap-4",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-									"data-uid": "src/components/Footer.tsx:20:15",
+									"data-uid": "src/components/Footer.tsx:21:15",
 									"data-prohibitions": "[]",
 									variant: "ghost",
 									size: "icon",
 									className: "hover:text-primary hover:bg-white/10 rounded-full text-secondary-foreground",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Instagram, {
-										"data-uid": "src/components/Footer.tsx:25:17",
+										"data-uid": "src/components/Footer.tsx:26:17",
 										"data-prohibitions": "[editContent]",
 										className: "w-5 h-5"
 									})
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-									"data-uid": "src/components/Footer.tsx:27:15",
+									"data-uid": "src/components/Footer.tsx:28:15",
 									"data-prohibitions": "[]",
 									variant: "ghost",
 									size: "icon",
 									className: "hover:text-primary hover:bg-white/10 rounded-full text-secondary-foreground",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Twitter, {
-										"data-uid": "src/components/Footer.tsx:32:17",
+										"data-uid": "src/components/Footer.tsx:33:17",
 										"data-prohibitions": "[editContent]",
 										className: "w-5 h-5"
 									})
@@ -29648,23 +30003,23 @@ function Footer() {
 						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/Footer.tsx:37:11",
+						"data-uid": "src/components/Footer.tsx:38:11",
 						"data-prohibitions": "[]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-							"data-uid": "src/components/Footer.tsx:38:13",
+							"data-uid": "src/components/Footer.tsx:39:13",
 							"data-prohibitions": "[]",
 							className: "font-heading font-semibold mb-4",
 							children: "Categorias"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-							"data-uid": "src/components/Footer.tsx:39:13",
+							"data-uid": "src/components/Footer.tsx:40:13",
 							"data-prohibitions": "[]",
 							className: "space-y-2 text-sm text-secondary-foreground/70",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:40:15",
+									"data-uid": "src/components/Footer.tsx:41:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:41:17",
+										"data-uid": "src/components/Footer.tsx:42:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29672,10 +30027,10 @@ function Footer() {
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:45:15",
+									"data-uid": "src/components/Footer.tsx:46:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:46:17",
+										"data-uid": "src/components/Footer.tsx:47:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29683,10 +30038,10 @@ function Footer() {
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:50:15",
+									"data-uid": "src/components/Footer.tsx:51:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:51:17",
+										"data-uid": "src/components/Footer.tsx:52:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29694,10 +30049,10 @@ function Footer() {
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:55:15",
+									"data-uid": "src/components/Footer.tsx:56:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:56:17",
+										"data-uid": "src/components/Footer.tsx:57:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29708,23 +30063,23 @@ function Footer() {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/Footer.tsx:63:11",
+						"data-uid": "src/components/Footer.tsx:64:11",
 						"data-prohibitions": "[]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-							"data-uid": "src/components/Footer.tsx:64:13",
+							"data-uid": "src/components/Footer.tsx:65:13",
 							"data-prohibitions": "[]",
 							className: "font-heading font-semibold mb-4",
 							children: "Ajuda"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-							"data-uid": "src/components/Footer.tsx:65:13",
+							"data-uid": "src/components/Footer.tsx:66:13",
 							"data-prohibitions": "[]",
 							className: "space-y-2 text-sm text-secondary-foreground/70",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:66:15",
+									"data-uid": "src/components/Footer.tsx:67:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:67:17",
+										"data-uid": "src/components/Footer.tsx:68:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29732,10 +30087,10 @@ function Footer() {
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:71:15",
+									"data-uid": "src/components/Footer.tsx:72:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:72:17",
+										"data-uid": "src/components/Footer.tsx:73:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29743,21 +30098,21 @@ function Footer() {
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:76:15",
+									"data-uid": "src/components/Footer.tsx:77:15",
 									"data-prohibitions": "[]",
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:77:17",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+										"data-uid": "src/components/Footer.tsx:78:17",
 										"data-prohibitions": "[]",
-										href: "#",
+										to: "/termos",
 										className: "hover:text-primary transition-colors",
-										children: "Termos de Uso"
+										children: "Termos de Uso e Licença"
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/Footer.tsx:81:15",
+									"data-uid": "src/components/Footer.tsx:82:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-										"data-uid": "src/components/Footer.tsx:82:17",
+										"data-uid": "src/components/Footer.tsx:83:17",
 										"data-prohibitions": "[]",
 										href: "#",
 										className: "hover:text-primary transition-colors",
@@ -29768,36 +30123,36 @@ function Footer() {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/Footer.tsx:89:11",
+						"data-uid": "src/components/Footer.tsx:90:11",
 						"data-prohibitions": "[]",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-								"data-uid": "src/components/Footer.tsx:90:13",
+								"data-uid": "src/components/Footer.tsx:91:13",
 								"data-prohibitions": "[]",
 								className: "font-heading font-semibold mb-4",
 								children: "Receba moldes grátis"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								"data-uid": "src/components/Footer.tsx:91:13",
+								"data-uid": "src/components/Footer.tsx:92:13",
 								"data-prohibitions": "[]",
 								className: "text-sm text-secondary-foreground/70 mb-4",
 								children: "Inscreva-se na nossa newsletter e receba um molde exclusivo por mês."
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/components/Footer.tsx:94:13",
+								"data-uid": "src/components/Footer.tsx:95:13",
 								"data-prohibitions": "[]",
 								className: "flex gap-2",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-									"data-uid": "src/components/Footer.tsx:95:15",
+									"data-uid": "src/components/Footer.tsx:96:15",
 									"data-prohibitions": "[editContent]",
 									placeholder: "Seu e-mail",
 									className: "bg-white/10 border-white/20 text-white placeholder:text-white/50 focus-visible:ring-primary"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-									"data-uid": "src/components/Footer.tsx:99:15",
+									"data-uid": "src/components/Footer.tsx:100:15",
 									"data-prohibitions": "[]",
 									variant: "default",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
-										"data-uid": "src/components/Footer.tsx:100:17",
+										"data-uid": "src/components/Footer.tsx:101:17",
 										"data-prohibitions": "[editContent]",
 										className: "w-4 h-4"
 									})
@@ -29807,15 +30162,15 @@ function Footer() {
 					})
 				]
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/Footer.tsx:106:9",
+				"data-uid": "src/components/Footer.tsx:107:9",
 				"data-prohibitions": "[]",
 				className: "border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-secondary-foreground/50",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					"data-uid": "src/components/Footer.tsx:107:11",
+					"data-uid": "src/components/Footer.tsx:108:11",
 					"data-prohibitions": "[]",
 					children: "© 2026 PaperCraft Hub. Todos os direitos reservados."
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					"data-uid": "src/components/Footer.tsx:108:11",
+					"data-uid": "src/components/Footer.tsx:109:11",
 					"data-prohibitions": "[]",
 					className: "mt-2 md:mt-0",
 					children: "Feito com cuidado para criativos."
@@ -29855,60 +30210,72 @@ function Layout() {
 //#endregion
 //#region src/App.tsx
 var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CartProvider, {
-	"data-uid": "src/App.tsx:12:3",
+	"data-uid": "src/App.tsx:13:3",
 	"data-prohibitions": "[]",
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BrowserRouter, {
-		"data-uid": "src/App.tsx:13:5",
+		"data-uid": "src/App.tsx:14:5",
 		"data-prohibitions": "[]",
 		future: {
 			v7_startTransition: false,
 			v7_relativeSplatPath: false
 		},
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TooltipProvider, {
-			"data-uid": "src/App.tsx:14:7",
+			"data-uid": "src/App.tsx:15:7",
 			"data-prohibitions": "[]",
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster$2, {
-					"data-uid": "src/App.tsx:15:9",
-					"data-prohibitions": "[editContent]"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster, {
 					"data-uid": "src/App.tsx:16:9",
 					"data-prohibitions": "[editContent]"
 				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Routes, {
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster, {
 					"data-uid": "src/App.tsx:17:9",
+					"data-prohibitions": "[editContent]"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Routes, {
+					"data-uid": "src/App.tsx:18:9",
 					"data-prohibitions": "[]",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Route, {
-						"data-uid": "src/App.tsx:18:11",
+						"data-uid": "src/App.tsx:19:11",
 						"data-prohibitions": "[]",
 						element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Layout, {
-							"data-uid": "src/App.tsx:18:27",
+							"data-uid": "src/App.tsx:19:27",
 							"data-prohibitions": "[editContent]"
 						}),
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
-							"data-uid": "src/App.tsx:19:13",
-							"data-prohibitions": "[editContent]",
-							path: "/",
-							element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Index, {
-								"data-uid": "src/App.tsx:19:38",
-								"data-prohibitions": "[editContent]"
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
+								"data-uid": "src/App.tsx:20:13",
+								"data-prohibitions": "[editContent]",
+								path: "/",
+								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Index, {
+									"data-uid": "src/App.tsx:20:38",
+									"data-prohibitions": "[editContent]"
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
+								"data-uid": "src/App.tsx:21:13",
+								"data-prohibitions": "[editContent]",
+								path: "/product/:id",
+								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProductDetails, {
+									"data-uid": "src/App.tsx:21:49",
+									"data-prohibitions": "[editContent]"
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
+								"data-uid": "src/App.tsx:22:13",
+								"data-prohibitions": "[editContent]",
+								path: "/termos",
+								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Terms, {
+									"data-uid": "src/App.tsx:22:44",
+									"data-prohibitions": "[editContent]"
+								})
 							})
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
-							"data-uid": "src/App.tsx:20:13",
-							"data-prohibitions": "[editContent]",
-							path: "/product/:id",
-							element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProductDetails, {
-								"data-uid": "src/App.tsx:20:49",
-								"data-prohibitions": "[editContent]"
-							})
-						})]
+						]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
-						"data-uid": "src/App.tsx:22:11",
+						"data-uid": "src/App.tsx:24:11",
 						"data-prohibitions": "[editContent]",
 						path: "*",
 						element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NotFound, {
-							"data-uid": "src/App.tsx:22:36",
+							"data-uid": "src/App.tsx:24:36",
 							"data-prohibitions": "[editContent]"
 						})
 					})]
@@ -29925,4 +30292,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CartProvider, {
 }));
 //#endregion
 
-//# sourceMappingURL=index-Dk5hVrpm.js.map
+//# sourceMappingURL=index-BCymyDmE.js.map
