@@ -2,10 +2,13 @@ import { useState, useMemo } from 'react'
 import { products } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import FilterBar from '@/components/FilterBar'
+import Newsletter from '@/components/Newsletter'
 import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 export default function Index() {
+  const [searchQuery, setSearchQuery] = useState('')
   const [filters, setFilters] = useState({
     category: 'Todos',
     sort: 'relevantes',
@@ -15,6 +18,22 @@ export default function Index() {
 
   const filteredProducts = useMemo(() => {
     let result = [...products]
+
+    // AI Advanced Search Simulation
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(query) ||
+          p.description.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          p.tags.some((t) => t.toLowerCase().includes(query)) ||
+          (query.includes('fácil') && p.difficulty <= 2) ||
+          (query.includes('fáceis') && p.difficulty <= 2) ||
+          (query.includes('difícil') && p.difficulty >= 4) ||
+          (query.includes('dificil') && p.difficulty >= 4),
+      )
+    }
 
     // Category
     if (filters.category !== 'Todos') {
@@ -45,7 +64,7 @@ export default function Index() {
     }
 
     return result
-  }, [filters])
+  }, [filters, searchQuery])
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -78,6 +97,22 @@ export default function Index() {
         </div>
       </section>
 
+      {/* AI Search Bar */}
+      <div className="mb-8">
+        <div className="relative max-w-2xl mx-auto">
+          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground">
+            <Sparkles className="w-5 h-5 text-primary" />
+          </div>
+          <Input
+            type="text"
+            className="pl-10 h-14 text-lg rounded-full shadow-subtle border-primary/20 focus-visible:ring-primary focus-visible:border-primary bg-card"
+            placeholder="Busca avançada com IA (ex: modelos fáceis de montar)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
+
       <FilterBar filters={filters} setFilters={setFilters} />
 
       {/* Product Grid */}
@@ -102,19 +137,22 @@ export default function Index() {
           </p>
           <Button
             variant="outline"
-            onClick={() =>
+            onClick={() => {
+              setSearchQuery('')
               setFilters({
                 category: 'Todos',
                 sort: 'relevantes',
                 priceRange: [0, 200],
                 difficulty: null,
               })
-            }
+            }}
           >
             Limpar Todos os Filtros
           </Button>
         </div>
       )}
+
+      <Newsletter />
     </div>
   )
 }

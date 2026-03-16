@@ -28,24 +28,22 @@ export default function ProductCard({ product, className }: ProductCardProps) {
   }
 
   return (
-    <Link to={`/product/${product.id}`} className={cn('group block', className)}>
+    <Link to={`/product/${product.id}`} className={cn('group block h-full', className)}>
       <Card className="overflow-hidden border-transparent shadow-subtle hover:shadow-elevation hover:-translate-y-1 transition-all duration-300 bg-card h-full flex flex-col">
-        <div className="relative aspect-square overflow-hidden bg-muted group/image">
+        <div className="relative aspect-square overflow-hidden bg-muted">
           <img
             src={product.images[0]}
             alt={product.title}
             className={cn(
-              'absolute inset-0 w-full h-full object-cover transition-all duration-500',
-              product.images.length > 1
-                ? 'group-hover/image:opacity-0 group-hover/image:scale-110'
-                : 'group-hover/image:scale-105',
+              'absolute inset-0 w-full h-full object-cover transition-opacity duration-500',
+              product.images.length > 1 ? 'group-hover:opacity-0' : '',
             )}
           />
           {product.images.length > 1 && (
             <img
               src={product.images[1]}
               alt={`${product.title} - Vista Alternativa`}
-              className="absolute inset-0 w-full h-full object-cover opacity-0 scale-95 transition-all duration-500 group-hover/image:opacity-100 group-hover/image:scale-105"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             />
           )}
 
@@ -58,7 +56,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             )}
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover/image:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent flex justify-center">
+          <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent flex justify-center">
             <Button className="w-full shadow-lg" onClick={handleAddToCart}>
               <ShoppingBag className="w-4 h-4 mr-2" /> Adicionar
             </Button>

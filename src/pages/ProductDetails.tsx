@@ -17,12 +17,15 @@ import { useToast } from '@/hooks/use-toast'
 import useCartStore from '@/stores/useCartStore'
 import ProductCard from '@/components/ProductCard'
 import NotFound from './NotFound'
+import ReviewSystem from '@/components/ReviewSystem'
+import CheckoutDialog from '@/components/CheckoutDialog'
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>()
   const product = products.find((p) => p.id === id)
   const { addItem } = useCartStore()
   const { toast } = useToast()
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
 
   const mediaList = useMemo(() => {
     if (!product) return []
@@ -217,18 +220,29 @@ export default function ProductDetails() {
           </div>
 
           <div className="mt-auto md:sticky md:bottom-8 z-20 bg-background/80 backdrop-blur-md p-4 md:p-0 rounded-2xl md:bg-transparent -mx-4 md:mx-0 shadow-elevation md:shadow-none border-t md:border-none">
-            <Button
-              size="lg"
-              className="w-full text-lg h-14 hover:scale-[1.02] transition-transform active:scale-95"
-              onClick={handleAddToCart}
-            >
-              <ShoppingBag className="w-5 h-5 mr-2" /> Adicionar ao Carrinho
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                size="lg"
+                className="w-full text-lg h-14 hover:scale-[1.02] transition-transform active:scale-95 flex-1"
+                onClick={() => setIsCheckoutOpen(true)}
+              >
+                Comprar Agora
+              </Button>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="w-full sm:w-auto h-14 hover:scale-[1.02] transition-transform active:scale-95"
+                onClick={handleAddToCart}
+              >
+                <ShoppingBag className="w-5 h-5 mr-2" />
+                Carrinho
+              </Button>
+            </div>
             <p className="text-center text-xs text-muted-foreground mt-3">
               Download imediato após a confirmação do pagamento.
             </p>
             <p className="text-center text-xs text-muted-foreground mt-2 px-4">
-              Ao adquirir, você concorda com nossos{' '}
+              Ao realizar a compra, você concorda com nossos{' '}
               <Link to="/termos" className="text-primary hover:underline font-medium">
                 Termos de Uso e Licença
               </Link>
@@ -237,6 +251,10 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
+
+      <Separator className="my-16" />
+
+      <ReviewSystem />
 
       <Separator className="my-16" />
 
@@ -251,6 +269,8 @@ export default function ProductDetails() {
           </div>
         </section>
       )}
+
+      <CheckoutDialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen} product={product} />
     </div>
   )
 }
