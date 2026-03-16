@@ -5,13 +5,21 @@ import useCartStore from '@/stores/useCartStore'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function CartDrawer({ children }: { children: ReactNode }) {
   const { items, updateQuantity, removeItem, subtotal, totalItems } = useCartStore()
+  const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const handleCheckout = () => {
+    setOpen(false)
+    navigate('/checkout')
+  }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="w-full sm:max-w-md flex flex-col">
         <SheetHeader className="px-1">
@@ -95,7 +103,12 @@ export default function CartDrawer({ children }: { children: ReactNode }) {
               R$ {subtotal.toFixed(2).replace('.', ',')}
             </span>
           </div>
-          <Button className="w-full" size="lg" disabled={items.length === 0}>
+          <Button
+            className="w-full"
+            size="lg"
+            disabled={items.length === 0}
+            onClick={handleCheckout}
+          >
             Finalizar Compra
           </Button>
         </div>

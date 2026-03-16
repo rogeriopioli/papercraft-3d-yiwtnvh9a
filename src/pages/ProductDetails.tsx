@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
   ChevronRight,
   Clock,
@@ -18,14 +18,13 @@ import useCartStore from '@/stores/useCartStore'
 import ProductCard from '@/components/ProductCard'
 import NotFound from './NotFound'
 import ReviewSystem from '@/components/ReviewSystem'
-import CheckoutDialog from '@/components/CheckoutDialog'
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const product = products.find((p) => p.id === id)
   const { addItem } = useCartStore()
   const { toast } = useToast()
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
 
   const mediaList = useMemo(() => {
     if (!product) return []
@@ -55,6 +54,10 @@ export default function ProductDetails() {
       title: 'Adicionado ao carrinho!',
       description: `${product.title} foi adicionado.`,
     })
+  }
+
+  const handleBuyNow = () => {
+    navigate(`/checkout?productId=${product.id}`)
   }
 
   const getVideoEmbedUrl = (url: string) => {
@@ -224,7 +227,7 @@ export default function ProductDetails() {
               <Button
                 size="lg"
                 className="w-full text-lg h-14 hover:scale-[1.02] transition-transform active:scale-95 flex-1"
-                onClick={() => setIsCheckoutOpen(true)}
+                onClick={handleBuyNow}
               >
                 Comprar Agora
               </Button>
@@ -269,8 +272,6 @@ export default function ProductDetails() {
           </div>
         </section>
       )}
-
-      <CheckoutDialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen} product={product} />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Index from './pages/Index'
 import NotFound from './pages/NotFound'
 import ProductDetails from './pages/ProductDetails'
 import Terms from './pages/Terms'
+import Checkout from './pages/Checkout'
 import Layout from './components/Layout'
 import { CartProvider } from './stores/useCartStore'
 
@@ -20,6 +21,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/termos" element={<Terms />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
