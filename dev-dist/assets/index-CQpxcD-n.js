@@ -19061,6 +19061,13 @@ var ArrowRight = createLucideIcon("arrow-right", [["path", {
 	d: "m12 5 7 7-7 7",
 	key: "xquz4c"
 }]]);
+var BookOpen = createLucideIcon("book-open", [["path", {
+	d: "M12 7v14",
+	key: "1akyts"
+}], ["path", {
+	d: "M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z",
+	key: "ruj8y"
+}]]);
 var Check = createLucideIcon("check", [["path", {
 	d: "M20 6 9 17l-5-5",
 	key: "1gmf2c"
@@ -19117,6 +19124,13 @@ var CreditCard = createLucideIcon("credit-card", [["rect", {
 	y1: "10",
 	y2: "10",
 	key: "1b3vmo"
+}]]);
+var Droplets = createLucideIcon("droplets", [["path", {
+	d: "M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z",
+	key: "1ptgy4"
+}], ["path", {
+	d: "M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97",
+	key: "1sl1rz"
 }]]);
 var FileText = createLucideIcon("file-text", [
 	["path", {
@@ -19222,6 +19236,50 @@ var Plus = createLucideIcon("plus", [["path", {
 	d: "M12 5v14",
 	key: "s699le"
 }]]);
+var Printer = createLucideIcon("printer", [
+	["path", {
+		d: "M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2",
+		key: "143wyd"
+	}],
+	["path", {
+		d: "M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6",
+		key: "1itne7"
+	}],
+	["rect", {
+		x: "6",
+		y: "14",
+		width: "12",
+		height: "8",
+		rx: "1",
+		key: "1ue0tg"
+	}]
+]);
+var Scissors = createLucideIcon("scissors", [
+	["circle", {
+		cx: "6",
+		cy: "6",
+		r: "3",
+		key: "1lh9wr"
+	}],
+	["path", {
+		d: "M8.12 8.12 12 12",
+		key: "1alkpv"
+	}],
+	["path", {
+		d: "M20 4 8.12 15.88",
+		key: "xgtan2"
+	}],
+	["circle", {
+		cx: "6",
+		cy: "18",
+		r: "3",
+		key: "fqmcym"
+	}],
+	["path", {
+		d: "M14.8 14.8 20 20",
+		key: "ptml3r"
+	}]
+]);
 var Search = createLucideIcon("search", [["path", {
 	d: "m21 21-4.34-4.34",
 	key: "14j7rj"
@@ -29745,6 +29803,206 @@ function Checkout() {
 	});
 }
 //#endregion
+//#region src/pages/HowToAssemble.tsx
+function HowToAssemble() {
+	const steps = [
+		{
+			title: "1. Imprima",
+			description: "Baixe o arquivo PDF e imprima em papel de gramatura alta (recomendamos entre 180g e 250g). Papel color plus, offset ou couché fosco são ótimas opções.",
+			icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Printer, {
+				"data-uid": "src/pages/HowToAssemble.tsx:11:13",
+				"data-prohibitions": "[editContent]",
+				className: "w-8 h-8 text-primary"
+			})
+		},
+		{
+			title: "2. Vinque e Corte",
+			description: "Antes de cortar, passe uma caneta sem tinta ou estilete levemente (sem cortar) nas linhas pontilhadas para facilitar a dobra. Depois, recorte as peças pelas linhas contínuas externas.",
+			icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Scissors, {
+				"data-uid": "src/pages/HowToAssemble.tsx:17:13",
+				"data-prohibitions": "[editContent]",
+				className: "w-8 h-8 text-primary"
+			})
+		},
+		{
+			title: "3. Dobre",
+			description: "Dobre as marcações. Linhas tracejadas (---) normalmente indicam dobra \"montanha\" (para fora) e linhas traço-ponto (-.-) indicam dobra \"vale\" (para dentro). Siga a legenda.",
+			icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BookOpen, {
+				"data-uid": "src/pages/HowToAssemble.tsx:23:13",
+				"data-prohibitions": "[editContent]",
+				className: "w-8 h-8 text-primary"
+			})
+		},
+		{
+			title: "4. Cole",
+			description: "Encontre os números iguais nas abas e nas bordas das peças. Aplique uma camada fina de cola branca escolar ou cola para artesanato na aba e pressione as duas partes juntas até secar.",
+			icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Droplets, {
+				"data-uid": "src/pages/HowToAssemble.tsx:29:13",
+				"data-prohibitions": "[editContent]",
+				className: "w-8 h-8 text-primary"
+			})
+		}
+	];
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		"data-uid": "src/pages/HowToAssemble.tsx:34:5",
+		"data-prohibitions": "[editContent]",
+		className: "container mx-auto px-4 py-8 max-w-4xl",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
+				"data-uid": "src/pages/HowToAssemble.tsx:35:7",
+				"data-prohibitions": "[]",
+				className: "flex items-center text-sm text-muted-foreground mb-8",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+						"data-uid": "src/pages/HowToAssemble.tsx:36:9",
+						"data-prohibitions": "[]",
+						to: "/",
+						className: "hover:text-primary transition-colors",
+						children: "Home"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, {
+						"data-uid": "src/pages/HowToAssemble.tsx:39:9",
+						"data-prohibitions": "[editContent]",
+						className: "w-4 h-4 mx-1"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						"data-uid": "src/pages/HowToAssemble.tsx:40:9",
+						"data-prohibitions": "[]",
+						className: "text-foreground font-medium truncate",
+						children: "Como Montar"
+					})
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				"data-uid": "src/pages/HowToAssemble.tsx:43:7",
+				"data-prohibitions": "[]",
+				className: "mb-12 text-center",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+					"data-uid": "src/pages/HowToAssemble.tsx:44:9",
+					"data-prohibitions": "[]",
+					className: "text-3xl md:text-5xl font-heading font-bold mb-4 text-foreground",
+					children: "Guia de Montagem"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					"data-uid": "src/pages/HowToAssemble.tsx:47:9",
+					"data-prohibitions": "[]",
+					className: "text-lg text-muted-foreground max-w-2xl mx-auto",
+					children: "Aprenda o básico do papercraft e dê vida aos seus modelos 3D com estas etapas simples."
+				})]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-uid": "src/pages/HowToAssemble.tsx:52:7",
+				"data-prohibitions": "[editContent]",
+				className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-12",
+				children: steps.map((step, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					"data-uid": "src/pages/HowToAssemble.tsx:54:11",
+					"data-prohibitions": "[editContent]",
+					className: "border rounded-2xl p-6 bg-card shadow-subtle hover:shadow-elevation transition-shadow flex flex-col",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						"data-uid": "src/pages/HowToAssemble.tsx:58:13",
+						"data-prohibitions": "[editContent]",
+						className: "flex flex-row items-center gap-4 mb-4",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							"data-uid": "src/pages/HowToAssemble.tsx:59:15",
+							"data-prohibitions": "[editContent]",
+							className: "p-3 bg-primary/10 rounded-xl shrink-0",
+							children: step.icon
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+							"data-uid": "src/pages/HowToAssemble.tsx:60:15",
+							"data-prohibitions": "[editContent]",
+							className: "font-heading font-bold text-xl",
+							children: step.title
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						"data-uid": "src/pages/HowToAssemble.tsx:62:13",
+						"data-prohibitions": "[editContent]",
+						className: "text-muted-foreground leading-relaxed flex-1",
+						children: step.description
+					})]
+				}, index))
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {
+				"data-uid": "src/pages/HowToAssemble.tsx:67:7",
+				"data-prohibitions": "[editContent]",
+				className: "my-12"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				"data-uid": "src/pages/HowToAssemble.tsx:69:7",
+				"data-prohibitions": "[]",
+				className: "bg-secondary/30 p-8 rounded-2xl border",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+					"data-uid": "src/pages/HowToAssemble.tsx:70:9",
+					"data-prohibitions": "[]",
+					className: "text-2xl font-heading font-bold mb-6 text-center",
+					children: "Dicas Extras"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
+					"data-uid": "src/pages/HowToAssemble.tsx:71:9",
+					"data-prohibitions": "[]",
+					className: "space-y-6 text-muted-foreground",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+							"data-uid": "src/pages/HowToAssemble.tsx:72:11",
+							"data-prohibitions": "[]",
+							className: "flex items-start gap-4",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"data-uid": "src/pages/HowToAssemble.tsx:73:13",
+								"data-prohibitions": "[editContent]",
+								className: "w-2 h-2 rounded-full bg-primary mt-2 shrink-0"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								"data-uid": "src/pages/HowToAssemble.tsx:74:13",
+								"data-prohibitions": "[]",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
+									"data-uid": "src/pages/HowToAssemble.tsx:75:15",
+									"data-prohibitions": "[]",
+									className: "text-foreground",
+									children: "Tenha paciência:"
+								}), " O papercraft é uma atividade relaxante. Não tenha pressa, o resultado final vale a pena!"]
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+							"data-uid": "src/pages/HowToAssemble.tsx:79:11",
+							"data-prohibitions": "[]",
+							className: "flex items-start gap-4",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"data-uid": "src/pages/HowToAssemble.tsx:80:13",
+								"data-prohibitions": "[editContent]",
+								className: "w-2 h-2 rounded-full bg-primary mt-2 shrink-0"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								"data-uid": "src/pages/HowToAssemble.tsx:81:13",
+								"data-prohibitions": "[]",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
+									"data-uid": "src/pages/HowToAssemble.tsx:82:15",
+									"data-prohibitions": "[]",
+									className: "text-foreground",
+									children: "Use pouca cola:"
+								}), " O excesso de cola pode umedecer o papel e deformar o modelo. Um palito de dente ajuda a espalhar a cola uniformemente."]
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+							"data-uid": "src/pages/HowToAssemble.tsx:87:11",
+							"data-prohibitions": "[]",
+							className: "flex items-start gap-4",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"data-uid": "src/pages/HowToAssemble.tsx:88:13",
+								"data-prohibitions": "[editContent]",
+								className: "w-2 h-2 rounded-full bg-primary mt-2 shrink-0"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								"data-uid": "src/pages/HowToAssemble.tsx:89:13",
+								"data-prohibitions": "[]",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
+									"data-uid": "src/pages/HowToAssemble.tsx:90:15",
+									"data-prohibitions": "[]",
+									className: "text-foreground",
+									children: "Ordem de montagem:"
+								}), " É geralmente mais fácil começar por peças pequenas e detalhadas (como focinhos ou chifres) e deixar as aberturas maiores para o final."]
+							})]
+						})
+					]
+				})]
+			})
+		]
+	});
+}
+//#endregion
 //#region ../../cache/modules/catalogo-papercraft-3d-b9437/node_modules/.pnpm/@radix-ui+react-scroll-area@1.2.10_@types+react-dom@19.2.3_@types+react@19.2.14__@types_155614c2fe5222bb9b221068b09efefc/node_modules/@radix-ui/react-scroll-area/dist/index.mjs
 function useStateMachine(initialState, machine) {
 	return import_react.useReducer((state, event) => {
@@ -30928,10 +31186,10 @@ function Footer() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
 									"data-uid": "src/components/Footer.tsx:67:15",
 									"data-prohibitions": "[]",
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 										"data-uid": "src/components/Footer.tsx:68:17",
 										"data-prohibitions": "[]",
-										href: "#",
+										to: "/como-montar",
 										className: "hover:text-primary transition-colors",
 										children: "Como montar"
 									})
@@ -31060,81 +31318,90 @@ function Layout() {
 //#endregion
 //#region src/App.tsx
 var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CartProvider, {
-	"data-uid": "src/App.tsx:14:3",
+	"data-uid": "src/App.tsx:15:3",
 	"data-prohibitions": "[]",
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BrowserRouter, {
-		"data-uid": "src/App.tsx:15:5",
+		"data-uid": "src/App.tsx:16:5",
 		"data-prohibitions": "[]",
 		future: {
 			v7_startTransition: false,
 			v7_relativeSplatPath: false
 		},
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(TooltipProvider, {
-			"data-uid": "src/App.tsx:16:7",
+			"data-uid": "src/App.tsx:17:7",
 			"data-prohibitions": "[]",
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster$2, {
-					"data-uid": "src/App.tsx:17:9",
-					"data-prohibitions": "[editContent]"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster, {
 					"data-uid": "src/App.tsx:18:9",
 					"data-prohibitions": "[editContent]"
 				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Routes, {
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Toaster, {
 					"data-uid": "src/App.tsx:19:9",
+					"data-prohibitions": "[editContent]"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Routes, {
+					"data-uid": "src/App.tsx:20:9",
 					"data-prohibitions": "[]",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Route, {
-						"data-uid": "src/App.tsx:20:11",
+						"data-uid": "src/App.tsx:21:11",
 						"data-prohibitions": "[]",
 						element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Layout, {
-							"data-uid": "src/App.tsx:20:27",
+							"data-uid": "src/App.tsx:21:27",
 							"data-prohibitions": "[editContent]"
 						}),
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
-								"data-uid": "src/App.tsx:21:13",
+								"data-uid": "src/App.tsx:22:13",
 								"data-prohibitions": "[editContent]",
 								path: "/",
 								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Index, {
-									"data-uid": "src/App.tsx:21:38",
-									"data-prohibitions": "[editContent]"
-								})
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
-								"data-uid": "src/App.tsx:22:13",
-								"data-prohibitions": "[editContent]",
-								path: "/product/:id",
-								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProductDetails, {
-									"data-uid": "src/App.tsx:22:49",
+									"data-uid": "src/App.tsx:22:38",
 									"data-prohibitions": "[editContent]"
 								})
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
 								"data-uid": "src/App.tsx:23:13",
 								"data-prohibitions": "[editContent]",
-								path: "/termos",
-								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Terms, {
-									"data-uid": "src/App.tsx:23:44",
+								path: "/product/:id",
+								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProductDetails, {
+									"data-uid": "src/App.tsx:23:49",
 									"data-prohibitions": "[editContent]"
 								})
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
 								"data-uid": "src/App.tsx:24:13",
 								"data-prohibitions": "[editContent]",
+								path: "/termos",
+								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Terms, {
+									"data-uid": "src/App.tsx:24:44",
+									"data-prohibitions": "[editContent]"
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
+								"data-uid": "src/App.tsx:25:13",
+								"data-prohibitions": "[editContent]",
+								path: "/como-montar",
+								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HowToAssemble, {
+									"data-uid": "src/App.tsx:25:49",
+									"data-prohibitions": "[editContent]"
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
+								"data-uid": "src/App.tsx:26:13",
+								"data-prohibitions": "[editContent]",
 								path: "/checkout",
 								element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Checkout, {
-									"data-uid": "src/App.tsx:24:46",
+									"data-uid": "src/App.tsx:26:46",
 									"data-prohibitions": "[editContent]"
 								})
 							})
 						]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Route, {
-						"data-uid": "src/App.tsx:26:11",
+						"data-uid": "src/App.tsx:28:11",
 						"data-prohibitions": "[editContent]",
 						path: "*",
 						element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NotFound, {
-							"data-uid": "src/App.tsx:26:36",
+							"data-uid": "src/App.tsx:28:36",
 							"data-prohibitions": "[editContent]"
 						})
 					})]
@@ -31151,4 +31418,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CartProvider, {
 }));
 //#endregion
 
-//# sourceMappingURL=index-Dni9ZLGD.js.map
+//# sourceMappingURL=index-CQpxcD-n.js.map

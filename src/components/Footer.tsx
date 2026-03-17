@@ -65,9 +65,9 @@ export default function Footer() {
             <h4 className="font-heading font-semibold mb-4">Ajuda</h4>
             <ul className="space-y-2 text-sm text-secondary-foreground/70">
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
+                <Link to="/como-montar" className="hover:text-primary transition-colors">
                   Como montar
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-colors">

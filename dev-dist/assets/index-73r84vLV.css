@@ -873,6 +873,11 @@ h1,
   margin-bottom: 0.25rem;
 }
 
+.my-12{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
 .my-16{
   margin-top: 4rem;
   margin-bottom: 4rem;
@@ -1353,6 +1358,10 @@ h1,
 
 .max-w-3xl{
   max-width: 48rem;
+}
+
+.max-w-4xl{
+  max-width: 56rem;
 }
 
 .max-w-5xl{
@@ -2575,6 +2584,12 @@ h1,
 
 .transition-opacity{
   transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-shadow{
+  transition-property: box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
