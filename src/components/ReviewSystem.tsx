@@ -103,7 +103,7 @@ export default function ReviewSystem() {
               </p>
               <div className="flex gap-2">
                 <img
-                  src="https://img.usecurling.com/p/200/200?q=papercraft+in+living+room&color=gray"
+                  src="https://img.usecurling.com/p/200/200?q=low%20poly%20papercraft%20model&color=gray"
                   className="w-16 h-16 rounded-lg object-cover border"
                   alt="Review photo"
                 />
