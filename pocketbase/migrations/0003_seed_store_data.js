@@ -31,7 +31,7 @@ migrate(
         category: 'Animais',
         difficulty: 3,
         images: [''],
-        video: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        video: '',
         description:
           'Um impressionante troféu de parede em formato de cervo. Perfeito para decoração de salas modernas e escritórios. O arquivo PDF contém todas as peças numeradas e instruções detalhadas passo a passo.',
         specs: { sheets: 12, time: '4-6 horas', dimensions: '45 x 30 x 25 cm' },
@@ -45,8 +45,7 @@ migrate(
         category: 'Animais',
         difficulty: 2,
         images: [''],
-        video:
-          'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        video: '',
         description:
           'Uma raposa sentada minimalista. Ótima para iniciantes no mundo do papercraft. Fica linda na mesa do escritório ou na estante da sala.',
         specs: { sheets: 5, time: '2-3 horas', dimensions: '20 x 15 x 18 cm' },
