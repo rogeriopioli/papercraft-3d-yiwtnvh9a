@@ -36,12 +36,6 @@ export default function Header() {
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch()
-    }
-  }
-
   return (
     <header className="glass-header border-b border-border/40 sticky top-0 z-50 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
@@ -52,22 +46,28 @@ export default function Header() {
           <span className="text-heading font-bold text-xl hidden sm:block">PapercraftRP</span>
         </Link>
 
-        <div className="flex-1 max-w-xl hidden md:flex relative">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            handleSearch()
+          }}
+          className="flex-1 max-w-xl hidden md:flex relative"
+        >
           <button
-            onClick={handleSearch}
+            type="submit"
             className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors z-10"
             aria-label="Buscar"
           >
             <Search className="w-4 h-4" />
           </button>
           <Input
+            type="search"
             placeholder="Buscar modelos 3D..."
             className="w-full pl-10 bg-muted/50 border-transparent focus-visible:ring-primary focus-visible:bg-background transition-all"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
-        </div>
+        </form>
 
         <div className="flex items-center gap-2 sm:gap-6 shrink-0">
           <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-muted-foreground">

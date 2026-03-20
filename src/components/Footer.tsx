@@ -80,9 +80,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  Contato
-                </a>
+                <Link to="/suporte" className="hover:text-primary transition-colors">
+                  Contato Suporte
+                </Link>
               </li>
             </ul>
           </div>

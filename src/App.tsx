@@ -8,6 +8,7 @@ import ProductDetails from './pages/ProductDetails'
 import Terms from './pages/Terms'
 import Checkout from './pages/Checkout'
 import HowToAssemble from './pages/HowToAssemble'
+import Support from './pages/Support'
 import Layout from './components/Layout'
 import { CartProvider } from './stores/useCartStore'
 import { WishlistProvider } from './stores/useWishlistStore'
@@ -32,6 +33,7 @@ const App = () => (
                     <Route path="/termos" element={<Terms />} />
                     <Route path="/como-montar" element={<HowToAssemble />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/suporte" element={<Support />} />
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>
