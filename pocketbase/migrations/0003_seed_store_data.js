@@ -30,10 +30,7 @@ migrate(
         price: 45.9,
         category: 'Animais',
         difficulty: 3,
-        images: [
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20papercraft%20deer%20head&color=blue',
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20papercraft%20deer&color=white',
-        ],
+        images: [''],
         video: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         description:
           'Um impressionante troféu de parede em formato de cervo. Perfeito para decoração de salas modernas e escritórios. O arquivo PDF contém todas as peças numeradas e instruções detalhadas passo a passo.',
@@ -47,10 +44,7 @@ migrate(
         price: 32.5,
         category: 'Animais',
         difficulty: 2,
-        images: [
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20papercraft%20fox&color=blue',
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20fox%20origami&color=orange',
-        ],
+        images: [''],
         video:
           'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         description:
@@ -66,7 +60,7 @@ migrate(
         price: 28.0,
         category: 'Decoração',
         difficulty: 2,
-        images: ['https://img.usecurling.com/p/800/800?q=lowpoly%20papercraft%20vase&color=blue'],
+        images: [''],
         description:
           'Um vaso decorativo moderno para flores secas (não usar com água!). Design elegante com torção geométrica.',
         specs: { sheets: 4, time: '1-2 horas', dimensions: '25 x 10 x 10 cm' },
@@ -80,10 +74,7 @@ migrate(
         price: 89.9,
         category: 'Personagens',
         difficulty: 5,
-        images: [
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20papercraft%20dragon&color=blue',
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20dragon%20sculpture&color=cyan',
-        ],
+        images: [''],
         description:
           'Desafio supremo! Um dragão gigante com detalhes impressionantes. Requer paciência e precisão.',
         specs: { sheets: 35, time: '15+ horas', dimensions: '60 x 40 x 50 cm' },
@@ -97,9 +88,7 @@ migrate(
         price: 65.0,
         category: 'Arquitetura',
         difficulty: 4,
-        images: [
-          'https://img.usecurling.com/p/800/800?q=lowpoly%20papercraft%20city%20lamp&color=blue',
-        ],
+        images: [''],
         description:
           'Diorama de uma cidade em miniatura projetado para ser usado com luzes LED internas, criando um efeito noturno incrível.',
         specs: { sheets: 22, time: '8-10 horas', dimensions: '30 x 30 x 20 cm' },
