@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react'
 import { Product } from '@/data/products'
-import { pbMock } from '@/lib/api'
+import pb from '@/lib/pocketbase/client'
 
 interface ProductContextType {
   products: Product[]
@@ -21,11 +21,26 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   const fetchProducts = useCallback(async () => {
     setIsLoading(true)
     try {
-      const data = await pbMock.collection('products').getFullList()
-      setProducts(data)
+      const records = await pb.collection('products').getFullList()
+      const formatted = records.map((r) => ({
+        id: r.id,
+        title: r.title,
+        price: r.price,
+        category: r.category,
+        difficulty: r.difficulty,
+        images: r.images || [],
+        video: r.video || '',
+        description: r.description,
+        specs: r.specs || { sheets: 0, time: '', dimensions: '' },
+        rating: r.rating || 0,
+        isNew: r.isNew || false,
+        isBestSeller: r.isBestSeller || false,
+        tags: r.tags || [],
+      })) as Product[]
+      setProducts(formatted)
       setHasFetched(true)
     } catch (error) {
-      console.error(error)
+      console.error('Error fetching products:', error)
     } finally {
       setIsLoading(false)
     }
@@ -36,17 +51,17 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   }, [hasFetched, fetchProducts])
 
   const addProduct = async (product: Omit<Product, 'id'>) => {
-    const newProd = await pbMock.collection('products').create(product)
-    setProducts((prev) => [newProd, ...prev])
+    const newProd = await pb.collection('products').create(product)
+    setProducts((prev) => [newProd as unknown as Product, ...prev])
   }
 
   const updateProduct = async (id: string, product: Partial<Product>) => {
-    const updated = await pbMock.collection('products').update(id, product)
+    const updated = await pb.collection('products').update(id, product)
     setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, ...updated } : p)))
   }
 
   const deleteProduct = async (id: string) => {
-    await pbMock.collection('products').delete(id)
+    await pb.collection('products').delete(id)
     setProducts((prev) => prev.filter((p) => p.id !== id))
   }
 

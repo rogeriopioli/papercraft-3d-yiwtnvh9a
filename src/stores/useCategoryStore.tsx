@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react'
 import { Category } from '@/data/products'
-import { pbMock } from '@/lib/api'
+import pb from '@/lib/pocketbase/client'
 
 interface CategoryContextType {
   categories: Category[]
@@ -21,11 +21,15 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
   const fetchCategories = useCallback(async () => {
     setIsLoading(true)
     try {
-      const data = await pbMock.collection('categories').getFullList()
-      setCategories(data)
+      const records = await pb.collection('categories').getFullList()
+      const formatted = records.map((r) => ({
+        id: r.id,
+        name: r.name,
+      })) as Category[]
+      setCategories(formatted)
       setHasFetched(true)
     } catch (error) {
-      console.error(error)
+      console.error('Error fetching categories:', error)
     } finally {
       setIsLoading(false)
     }
@@ -36,17 +40,17 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
   }, [hasFetched, fetchCategories])
 
   const addCategory = async (name: string) => {
-    const newCat = await pbMock.collection('categories').create({ name })
-    setCategories((prev) => [...prev, newCat])
+    const newCat = await pb.collection('categories').create({ name })
+    setCategories((prev) => [...prev, newCat as unknown as Category])
   }
 
   const updateCategory = async (id: string, name: string) => {
-    const updated = await pbMock.collection('categories').update(id, { name })
-    setCategories((prev) => prev.map((c) => (c.id === id ? updated : c)))
+    const updated = await pb.collection('categories').update(id, { name })
+    setCategories((prev) => prev.map((c) => (c.id === id ? (updated as unknown as Category) : c)))
   }
 
   const deleteCategory = async (id: string) => {
-    await pbMock.collection('categories').delete(id)
+    await pb.collection('categories').delete(id)
     setCategories((prev) => prev.filter((c) => c.id !== id))
   }
 

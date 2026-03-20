@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,55 +6,56 @@
 
 @layer base {
   :root {
-    --background: 30 33% 99%; /* #FDFCFB Off-white */
-    --foreground: 215 28% 17%; /* #1F2937 Neutral Dark */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 28% 17%;
+    --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 28% 17%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 38 92% 44%; /* #D97706 Amber/Orange */
-    --primary-foreground: 0 0% 100%;
+    /* Primary: Blue-600 */
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 176 61% 19%; /* #134E4A Deep Teal */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 30 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 38 92% 95%; /* Light Amber for accents */
-    --accent-foreground: 38 92% 30%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 15% 90%;
-    --input: 30 15% 90%;
-    --ring: 38 92% 44%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 215 28% 12%;
-    --foreground: 30 33% 99%;
-    --card: 215 28% 15%;
-    --card-foreground: 30 33% 99%;
-    --popover: 215 28% 15%;
-    --popover-foreground: 30 33% 99%;
-    --primary: 38 92% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 176 61% 25%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 215 28% 20%;
-    --muted-foreground: 215 16% 70%;
-    --accent: 38 92% 20%;
-    --accent-foreground: 38 92% 90%;
-    --border: 215 28% 25%;
-    --input: 215 28% 25%;
-    --ring: 38 92% 50%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
   }
 
   * {
@@ -81,7 +82,7 @@
   }
 
   .glass-header {
-    @apply bg-background/80 backdrop-blur-md border-b border-border/50 sticky top-0 z-40;
+    @apply bg-white/90 backdrop-blur-md border-b border-border/50 sticky top-0 z-40;
   }
 
   @keyframes fade-in {

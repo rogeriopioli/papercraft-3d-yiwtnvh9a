@@ -8,13 +8,14 @@ import {
   ShoppingBag,
   Star,
   PlayCircle,
+  ShieldCheck,
 } from 'lucide-react'
-import { products } from '@/data/products'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { useToast } from '@/hooks/use-toast'
 import useCartStore from '@/stores/useCartStore'
+import useProductStore from '@/stores/useProductStore'
 import ProductCard from '@/components/ProductCard'
 import NotFound from './NotFound'
 import ReviewSystem from '@/components/ReviewSystem'
@@ -22,13 +23,17 @@ import ReviewSystem from '@/components/ReviewSystem'
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { toast } = useToast()
+
+  const { products, isLoading } = useProductStore()
   const product = products.find((p) => p.id === id)
   const { addItem } = useCartStore()
-  const { toast } = useToast()
+
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
 
   const mediaList = useMemo(() => {
     if (!product) return []
-    const list: { type: 'image' | 'video'; url: string }[] = product.images.map((url) => ({
+    const list: { type: 'image' | 'video'; url: string }[] = (product.images || []).map((url) => ({
       type: 'image',
       url,
     }))
@@ -38,11 +43,17 @@ export default function ProductDetails() {
     return list
   }, [product])
 
-  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-40">
+        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
 
   if (!product) return <NotFound />
 
-  const activeMedia = mediaList[activeMediaIndex]
+  const activeMedia = mediaList[activeMediaIndex] || mediaList[0]
 
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
@@ -79,37 +90,38 @@ export default function ProductDetails() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumbs */}
-      <nav className="flex items-center text-sm text-muted-foreground mb-8">
+      <nav className="flex items-center text-sm font-bold text-slate-400 mb-8">
         <Link to="/" className="hover:text-primary transition-colors">
           Home
         </Link>
-        <ChevronRight className="w-4 h-4 mx-1" />
-        <Link to="/" className="hover:text-primary transition-colors">
+        <ChevronRight className="w-4 h-4 mx-2" />
+        <Link to={`/?search=${product.category}`} className="hover:text-primary transition-colors">
           {product.category}
         </Link>
-        <ChevronRight className="w-4 h-4 mx-1" />
-        <span className="text-foreground font-medium truncate">{product.title}</span>
+        <ChevronRight className="w-4 h-4 mx-2" />
+        <span className="text-primary truncate">{product.title}</span>
       </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-16">
         {/* Gallery */}
         <div className="space-y-4">
-          <div className="aspect-square bg-muted rounded-2xl overflow-hidden relative border shadow-subtle flex items-center justify-center">
-            {activeMedia.type === 'image' ? (
+          <div className="aspect-square bg-slate-100 rounded-3xl overflow-hidden relative shadow-sm border border-slate-200 flex items-center justify-center">
+            {activeMedia && activeMedia.type === 'image' ? (
               <img
                 src={activeMedia.url}
                 alt={product.title}
                 className="w-full h-full object-cover animate-fade-in"
                 key={activeMedia.url}
               />
-            ) : activeMedia.url.endsWith('.mp4') || activeMedia.url.endsWith('.webm') ? (
+            ) : activeMedia &&
+              (activeMedia.url.endsWith('.mp4') || activeMedia.url.endsWith('.webm')) ? (
               <video
                 src={activeMedia.url}
                 controls
                 className="w-full h-full object-cover animate-fade-in"
                 key={activeMedia.url}
               />
-            ) : (
+            ) : activeMedia ? (
               <iframe
                 src={getVideoEmbedUrl(activeMedia.url)}
                 className="w-full h-full animate-fade-in"
@@ -118,7 +130,7 @@ export default function ProductDetails() {
                 key={activeMedia.url}
                 title={`${product.title} Video`}
               />
-            )}
+            ) : null}
           </div>
           {mediaList.length > 1 && (
             <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
@@ -126,18 +138,18 @@ export default function ProductDetails() {
                 <button
                   key={idx}
                   onClick={() => setActiveMediaIndex(idx)}
-                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all shrink-0 bg-muted flex items-center justify-center group ${
+                  className={`w-24 h-24 rounded-2xl overflow-hidden border-2 transition-all shrink-0 bg-slate-100 flex items-center justify-center group ${
                     activeMediaIndex === idx
-                      ? 'border-primary opacity-100'
+                      ? 'border-primary opacity-100 ring-4 ring-primary/20'
                       : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
                   {media.type === 'image' ? (
                     <img src={media.url} alt="" className="w-full h-full object-cover" />
                   ) : (
-                    <div className="flex flex-col items-center justify-center text-muted-foreground w-full h-full bg-secondary/50 transition-colors group-hover:bg-secondary">
-                      <PlayCircle className="w-6 h-6 mb-1 text-primary" />
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-primary">
+                    <div className="flex flex-col items-center justify-center text-slate-500 w-full h-full bg-slate-200 transition-colors group-hover:bg-slate-300">
+                      <PlayCircle className="w-8 h-8 mb-1 text-primary" />
+                      <span className="text-[10px] font-black uppercase tracking-wider text-primary">
                         Vídeo
                       </span>
                     </div>
@@ -151,82 +163,89 @@ export default function ProductDetails() {
         {/* Info */}
         <div className="flex flex-col">
           <div className="mb-6">
-            <h1 className="text-3xl md:text-4xl font-heading font-bold mb-3 text-foreground">
+            <h1 className="text-3xl md:text-5xl font-heading font-black mb-4 text-slate-900 tracking-tight leading-tight">
               {product.title}
             </h1>
             <div className="flex items-center gap-4">
-              <span className="text-3xl font-bold text-primary">
+              <span className="text-4xl font-black text-primary">
                 R$ {product.price.toFixed(2).replace('.', ',')}
               </span>
-              <div className="flex items-center bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-sm font-medium">
-                <Star className="w-4 h-4 text-amber-400 fill-current mr-1" />
-                {product.rating}
+              <div className="flex items-center bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-sm font-bold border border-blue-100">
+                <Star className="w-4 h-4 text-primary fill-current mr-1.5" />
+                {product.rating || '4.5'}
               </div>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-6">
-            <Badge variant="secondary">PDF Digital</Badge>
-            {product.tags.map((tag) => (
-              <Badge key={tag} variant="outline">
+          <div className="flex flex-wrap gap-2 mb-8">
+            <Badge className="bg-slate-800 hover:bg-slate-900 text-white border-none rounded-full px-4 py-1 text-sm">
+              Arquivo PDF Digital
+            </Badge>
+            {(product.tags || []).map((tag) => (
+              <Badge
+                key={tag}
+                variant="outline"
+                className="rounded-full px-4 py-1 text-sm text-slate-600 border-slate-200"
+              >
                 {tag}
               </Badge>
             ))}
           </div>
 
-          <p className="text-muted-foreground leading-relaxed mb-8 text-lg">
+          <p className="text-slate-600 font-medium leading-relaxed mb-10 text-lg">
             {product.description}
           </p>
 
-          <div className="bg-card border rounded-xl p-5 mb-8 shadow-subtle grid grid-cols-2 gap-y-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-muted rounded-lg">
-                <FileText className="w-5 h-5 text-primary" />
+          {/* Specs Grid */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 mb-10 shadow-sm grid grid-cols-2 gap-y-8">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-50 rounded-xl">
+                <FileText className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Folhas A4</p>
-                <p className="font-medium">{product.specs.sheets}</p>
+                <p className="text-sm font-bold text-slate-400">Folhas A4</p>
+                <p className="font-black text-slate-800 text-lg">{product.specs.sheets}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-muted rounded-lg">
-                <Clock className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-50 rounded-xl">
+                <Clock className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Tempo Estimado</p>
-                <p className="font-medium">{product.specs.time}</p>
+                <p className="text-sm font-bold text-slate-400">Tempo Estimado</p>
+                <p className="font-black text-slate-800 text-lg">{product.specs.time}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-muted rounded-lg">
-                <Maximize className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-50 rounded-xl">
+                <Maximize className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Dimensões</p>
-                <p className="font-medium">{product.specs.dimensions}</p>
+                <p className="text-sm font-bold text-slate-400">Dimensões</p>
+                <p className="font-black text-slate-800 text-lg">{product.specs.dimensions}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="flex gap-1 bg-muted p-2 rounded-lg items-center">
+            <div className="flex items-center gap-4">
+              <div className="flex gap-1.5 bg-blue-50 p-3 rounded-xl items-center">
                 {[...Array(5)].map((_, i) => (
                   <div
                     key={i}
-                    className={`w-1.5 h-1.5 rounded-full ${i < product.difficulty ? 'bg-primary' : 'bg-muted-foreground/30'}`}
+                    className={`w-2.5 h-2.5 rounded-full ${i < product.difficulty ? 'bg-primary' : 'bg-blue-200'}`}
                   />
                 ))}
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Dificuldade</p>
-                <p className="font-medium">Nível {product.difficulty}</p>
+                <p className="text-sm font-bold text-slate-400">Dificuldade</p>
+                <p className="font-black text-slate-800 text-lg">Nível {product.difficulty}</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-auto md:sticky md:bottom-8 z-20 bg-background/80 backdrop-blur-md p-4 md:p-0 rounded-2xl md:bg-transparent -mx-4 md:mx-0 shadow-elevation md:shadow-none border-t md:border-none">
-            <div className="flex flex-col sm:flex-row gap-3">
+          <div className="mt-auto bg-slate-50 p-6 rounded-3xl border border-slate-200">
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
               <Button
                 size="lg"
-                className="w-full text-lg h-14 hover:scale-[1.02] transition-transform active:scale-95 flex-1"
+                className="w-full text-lg h-14 font-bold rounded-xl hover:scale-[1.02] transition-transform active:scale-95 flex-1"
                 onClick={handleBuyNow}
               >
                 Comprar Agora
@@ -234,20 +253,20 @@ export default function ProductDetails() {
               <Button
                 size="lg"
                 variant="secondary"
-                className="w-full sm:w-auto h-14 hover:scale-[1.02] transition-transform active:scale-95"
+                className="w-full sm:w-auto h-14 font-bold rounded-xl bg-white text-slate-700 border border-slate-200 hover:border-primary hover:text-primary hover:scale-[1.02] transition-transform active:scale-95 shadow-sm"
                 onClick={handleAddToCart}
               >
                 <ShoppingBag className="w-5 h-5 mr-2" />
                 Carrinho
               </Button>
             </div>
-            <p className="text-center text-xs text-muted-foreground mt-3">
-              Download imediato após a confirmação do pagamento.
-            </p>
-            <p className="text-center text-xs text-muted-foreground mt-2 px-4">
-              Ao realizar a compra, você concorda com nossos{' '}
-              <Link to="/termos" className="text-primary hover:underline font-medium">
-                Termos de Uso e Licença
+            <div className="flex items-center justify-center gap-2 text-sm font-bold text-emerald-600 mb-2">
+              <ShieldCheck className="w-4 h-4" /> Download Imediato
+            </div>
+            <p className="text-center text-xs font-medium text-slate-500">
+              Ao comprar, você concorda com nossos{' '}
+              <Link to="/termos" className="text-primary hover:underline">
+                Termos de Uso
               </Link>
               .
             </p>
@@ -255,16 +274,18 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      <Separator className="my-16" />
+      <Separator className="my-16 bg-slate-200 h-1" />
 
       <ReviewSystem />
 
-      <Separator className="my-16" />
+      <Separator className="my-16 bg-slate-200 h-1" />
 
       {/* Related */}
       {relatedProducts.length > 0 && (
         <section>
-          <h2 className="text-2xl font-heading font-bold mb-6">Você também pode gostar</h2>
+          <h2 className="text-3xl font-heading font-black mb-8 text-slate-900">
+            Você também pode gostar
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
