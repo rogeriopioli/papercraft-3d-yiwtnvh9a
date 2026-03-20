@@ -10,26 +10,38 @@ import Checkout from './pages/Checkout'
 import HowToAssemble from './pages/HowToAssemble'
 import Layout from './components/Layout'
 import { CartProvider } from './stores/useCartStore'
+import { WishlistProvider } from './stores/useWishlistStore'
+import { AuthProvider } from './stores/useAuthStore'
+import { ProductProvider } from './stores/useProductStore'
+import { CategoryProvider } from './stores/useCategoryStore'
 
 const App = () => (
-  <CartProvider>
-    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/termos" element={<Terms />} />
-            <Route path="/como-montar" element={<HowToAssemble />} />
-            <Route path="/checkout" element={<Checkout />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </TooltipProvider>
-    </BrowserRouter>
-  </CartProvider>
+  <AuthProvider>
+    <CategoryProvider>
+      <ProductProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <Routes>
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/termos" element={<Terms />} />
+                    <Route path="/como-montar" element={<HowToAssemble />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                  </Route>
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </TooltipProvider>
+            </BrowserRouter>
+          </WishlistProvider>
+        </CartProvider>
+      </ProductProvider>
+    </CategoryProvider>
+  </AuthProvider>
 )
 
 export default App
