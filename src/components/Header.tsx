@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { Search, ShoppingBag, Heart, Hexagon, Menu } from 'lucide-react'
+import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
+import { Search, ShoppingBag, Heart, Hexagon, Menu, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
@@ -16,9 +16,11 @@ import useCartStore from '@/stores/useCartStore'
 import useWishlistStore from '@/stores/useWishlistStore'
 import useProductStore from '@/stores/useProductStore'
 import CartDrawer from './CartDrawer'
+import { cn } from '@/lib/utils'
 
 export default function Header() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams] = useSearchParams()
 
   const { totalItems } = useCartStore()
@@ -29,6 +31,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const validWishlistItems = wishlistItems.filter((id) => products.some((p) => p.id === id))
+  const isAdminActive = location.pathname.startsWith('/admin')
 
   useEffect(() => {
     setSearchValue(searchParams.get('search') || '')
@@ -79,10 +82,19 @@ export default function Header() {
         <div className="flex items-center gap-2 md:gap-4 shrink-0">
           <nav className="hidden md:flex items-center gap-6 font-bold text-[15px] text-slate-600 mr-2">
             <Link to="/" className="hover:text-primary transition-colors">
-              Home
+              Explorar
             </Link>
             <Link to="/como-montar" className="hover:text-primary transition-colors">
               Como Montar
+            </Link>
+            <Link
+              to="/admin"
+              className={cn(
+                'hover:text-primary transition-colors flex items-center gap-1.5',
+                isAdminActive && 'text-primary',
+              )}
+            >
+              <ShieldCheck className="w-4 h-4" /> Admin
             </Link>
             <Link to="/sobre" className="hover:text-primary transition-colors">
               Sobre
@@ -153,10 +165,17 @@ export default function Header() {
               </form>
               <nav className="flex flex-col gap-6 font-bold text-lg text-slate-700">
                 <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                  Home
+                  Explorar
                 </Link>
                 <Link to="/como-montar" onClick={() => setMobileMenuOpen(false)}>
                   Como Montar
+                </Link>
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-2 text-primary"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <ShieldCheck className="w-5 h-5" /> Admin
                 </Link>
                 <Link to="/sobre" onClick={() => setMobileMenuOpen(false)}>
                   Sobre

@@ -12,8 +12,5 @@ export function AdminPlaceholder({ title }: { title: string }) {
   )
 }
 
-export const AdminCoupons = () => <AdminPlaceholder title="Gerenciar Cupons" />
-export const AdminCategories = () => <AdminPlaceholder title="Gerenciar Categorias" />
-export const AdminEmails = () => <AdminPlaceholder title="Gerenciar E-mails" />
 export const AdminKB = () => <AdminPlaceholder title="Base de Conhecimento" />
 export const AdminChat = () => <AdminPlaceholder title="Conversas IA" />
