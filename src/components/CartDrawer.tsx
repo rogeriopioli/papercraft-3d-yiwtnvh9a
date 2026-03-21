@@ -1,4 +1,11 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetDescription,
+} from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
 import useCartStore from '@/stores/useCartStore'
@@ -30,6 +37,9 @@ export default function CartDrawer({ children }: { children: ReactNode }) {
               {totalItems} itens
             </Badge>
           </SheetTitle>
+          <SheetDescription className="sr-only">
+            Revise os itens do seu carrinho antes de prosseguir para o pagamento seguro.
+          </SheetDescription>
         </SheetHeader>
 
         <Separator className="my-4" />

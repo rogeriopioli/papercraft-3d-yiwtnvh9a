@@ -5,6 +5,7 @@ export interface Subscriber {
   email: string
   coupon_sent: boolean
   coupon_used: boolean
+  created?: string
 }
 
 export const createSubscriber = async (email: string) => {
@@ -21,4 +22,8 @@ export const getSubscriberByEmail = async (email: string) => {
 
 export const updateSubscriberCouponUsed = async (id: string) => {
   return pb.collection('subscribers').update(id, { coupon_used: true })
+}
+
+export const getSubscribers = async () => {
+  return pb.collection('subscribers').getFullList<Subscriber>({ sort: '-created' })
 }

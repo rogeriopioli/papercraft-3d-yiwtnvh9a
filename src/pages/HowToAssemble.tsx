@@ -134,30 +134,41 @@ export default function HowToAssemble() {
       <h2 className="text-3xl font-heading font-black text-center mb-8 text-slate-900">
         Entendendo as Dobras
       </h2>
+
+      <div className="w-full flex justify-center mb-12">
+        <img
+          src="https://img.usecurling.com/p/800/400?q=origami%20folds%20diagram&color=white"
+          alt="Diagrama Técnico de Dobras Mountain e Valley"
+          className="rounded-3xl border border-slate-200 shadow-md max-w-full h-auto object-cover"
+        />
+      </div>
+
       <div className="grid md:grid-cols-2 gap-8 mb-16">
         <div className="border border-slate-200 rounded-3xl p-8 bg-white text-center shadow-sm">
-          <h4 className="font-black text-xl mb-6 text-slate-800">Dobra Montanha (Mountain)</h4>
-          <div className="h-32 bg-slate-50 rounded-2xl mb-6 flex flex-col items-center justify-center border-2 border-dashed border-slate-300">
-            <span className="font-mono text-slate-400 font-bold text-2xl tracking-[0.3em]">
+          <h4 className="font-black text-xl mb-6 text-slate-800 text-blue-600">MOUNTAIN FOLD</h4>
+          <div className="h-32 bg-slate-50 rounded-2xl mb-6 flex flex-col items-center justify-center border-2 border-dashed border-blue-400">
+            <span className="font-mono text-blue-500 font-black text-3xl tracking-[0.3em]">
               - - - -
             </span>
           </div>
-          <p className="font-medium text-slate-600">
-            Representada por linhas tracejadas curtas. Dobre o papel para fora (na sua direção),
+          <p className="font-bold text-slate-700 mb-2">DOBRA PARA FORA (MONTANHA)</p>
+          <p className="font-medium text-slate-500">
+            Representada por linhas tracejadas azuis. Dobre o papel para fora (na sua direção),
             criando um formato de "montanha". O vinco fica para cima.
           </p>
         </div>
 
         <div className="border border-slate-200 rounded-3xl p-8 bg-white text-center shadow-sm">
-          <h4 className="font-black text-xl mb-6 text-slate-800">Dobra Vale (Valley)</h4>
-          <div className="h-32 bg-slate-50 rounded-2xl mb-6 flex flex-col items-center justify-center border-2 border-dashed border-slate-300">
-            <span className="font-mono text-slate-400 font-bold text-2xl tracking-[0.3em]">
+          <h4 className="font-black text-xl mb-6 text-slate-800 text-red-600">VALLEY FOLD</h4>
+          <div className="h-32 bg-slate-50 rounded-2xl mb-6 flex flex-col items-center justify-center border-2 border-dashed border-red-400">
+            <span className="font-mono text-red-500 font-black text-3xl tracking-[0.3em]">
               - . - . -
             </span>
           </div>
-          <p className="font-medium text-slate-600">
-            Representada por linhas traço-ponto. Dobre o papel para dentro (afastando de você),
-            criando um "vale" ou canaleta. O vinco fica para baixo.
+          <p className="font-bold text-slate-700 mb-2">DOBRA PARA DENTRO (VALE)</p>
+          <p className="font-medium text-slate-500">
+            Representada por linhas traço-ponto vermelhas. Dobre o papel para dentro (afastando de
+            você), criando um "vale" ou canaleta. O vinco fica para baixo.
           </p>
         </div>
       </div>

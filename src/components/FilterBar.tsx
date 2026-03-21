@@ -8,7 +8,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetDescription,
+} from '@/components/ui/sheet'
 import { Slider } from '@/components/ui/slider'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
@@ -61,7 +68,7 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
           <SheetTrigger asChild>
             <Button
               variant="outline"
-              className="gap-2 rounded-full h-12 px-6 font-bold bg-white text-slate-700 border-slate-200"
+              className="gap-2 rounded-full h-12 px-6 font-bold bg-white text-slate-700 border-slate-200 relative"
             >
               <SlidersHorizontal className="w-5 h-5 text-primary" />
               Filtros
@@ -75,6 +82,9 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
               <SheetTitle className="text-2xl font-black text-slate-800">
                 Filtros Avançados
               </SheetTitle>
+              <SheetDescription className="sr-only">
+                Ajuste os filtros de preço máximo e nível de dificuldade para refinar a busca.
+              </SheetDescription>
             </SheetHeader>
 
             <div className="space-y-10">

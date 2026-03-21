@@ -47,7 +47,7 @@ export default function Footer() {
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 font-medium">
               Acreditamos que dobrar papel transforma o estresse em uma obra de arte. Inspire-se e
-              decore seu mundo.
+              decore seu mundo com a geometria terapêutica.
             </p>
             <div className="flex items-center gap-4 pt-2">
               <a href="#" className="text-slate-400 hover:text-primary transition-colors">
@@ -65,14 +65,14 @@ export default function Footer() {
             <p className="text-sm leading-relaxed text-slate-400 font-medium">
               Nossa missão é trazer a terapia da arte manual através do papercraft low-poly.
               Transformamos folhas de papel plano em impressionantes esculturas tridimensionais que
-              promovem foco e relaxamento a cada dobra.
+              promovem foco e relaxamento a cada dobra, unindo design digital e montagem tátil.
             </p>
           </div>
 
           {/* Col 3 */}
           <div>
             <h4 className="text-white font-heading font-bold text-lg mb-6">Links Rápidos</h4>
-            <ul className="space-y-3 text-sm font-medium">
+            <ul className="space-y-3 text-sm font-medium flex flex-col items-start">
               <li>
                 <Link to="/" className="hover:text-primary transition-colors">
                   Home
@@ -96,6 +96,11 @@ export default function Footer() {
               <li>
                 <Link to="/termos" className="hover:text-primary transition-colors">
                   Termos de Uso
+                </Link>
+              </li>
+              <li>
+                <Link to="/suporte" className="hover:text-primary transition-colors">
+                  Contato / Suporte
                 </Link>
               </li>
               <li>
@@ -140,7 +145,7 @@ export default function Footer() {
             © {new Date().getFullYear()} PapercraftRP. Todos os direitos reservados.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <div className="flex items-center gap-1 text-xs text-emerald-400 font-bold mr-2 bg-emerald-400/10 px-3 py-1.5 rounded-full">
+            <div className="flex items-center gap-1 text-xs text-emerald-400 font-bold mr-2 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">
               <ShieldCheck className="w-4 h-4" /> Pagamentos Seguros
             </div>
             <img

@@ -245,7 +245,7 @@ export default function ProductDetails() {
             <div className="flex flex-col sm:flex-row gap-4 mb-4">
               <Button
                 size="lg"
-                className="w-full text-lg h-14 font-bold rounded-xl hover:scale-[1.02] transition-transform active:scale-95 flex-1"
+                className="w-full text-lg h-14 font-bold rounded-xl hover:scale-[1.02] transition-transform active:scale-95 flex-1 shadow-md"
                 onClick={handleBuyNow}
               >
                 Comprar Agora
@@ -260,10 +260,10 @@ export default function ProductDetails() {
                 Carrinho
               </Button>
             </div>
-            <div className="flex items-center justify-center gap-2 text-sm font-bold text-emerald-600 mb-2">
-              <ShieldCheck className="w-4 h-4" /> Download Imediato
+            <div className="flex items-center justify-center gap-2 text-sm font-bold text-emerald-600 mb-2 bg-emerald-50 py-2 rounded-lg border border-emerald-100">
+              <ShieldCheck className="w-4 h-4" /> Download Imediato após pagamento
             </div>
-            <p className="text-center text-xs font-medium text-slate-500">
+            <p className="text-center text-xs font-medium text-slate-500 mt-3">
               Ao comprar, você concorda com nossos{' '}
               <Link to="/termos" className="text-primary hover:underline">
                 Termos de Uso
@@ -276,7 +276,7 @@ export default function ProductDetails() {
 
       <Separator className="my-16 bg-slate-200 h-1" />
 
-      <ReviewSystem />
+      <ReviewSystem productId={product.id} />
 
       <Separator className="my-16 bg-slate-200 h-1" />
 

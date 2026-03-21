@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { Search, ShoppingBag, Heart, Hexagon, ShieldCheck, Menu } from 'lucide-react'
+import { Search, ShoppingBag, Heart, Hexagon, Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+  SheetHeader,
+  SheetDescription,
+} from '@/components/ui/sheet'
 import useCartStore from '@/stores/useCartStore'
 import useWishlistStore from '@/stores/useWishlistStore'
 import useProductStore from '@/stores/useProductStore'
@@ -40,7 +47,7 @@ export default function Header() {
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between gap-4">
         {/* Left - Logo */}
-        <Link to="/" className="flex items-center gap-2 group shrink-0">
+        <Link to="/" className="flex items-center gap-2 group shrink-0 mr-auto">
           <div className="bg-primary text-white p-2 md:p-2.5 rounded-xl group-hover:scale-105 transition-transform shadow-md">
             <Hexagon className="w-5 h-5 md:w-6 md:h-6 fill-current" />
           </div>
@@ -50,7 +57,7 @@ export default function Header() {
         </Link>
 
         {/* Center - Search (Desktop) */}
-        <div className="hidden lg:flex flex-1 max-w-md mx-8">
+        <div className="hidden lg:flex flex-1 max-w-md mx-4">
           <form onSubmit={handleSearch} className="relative w-full">
             <button
               type="submit"
@@ -82,35 +89,37 @@ export default function Header() {
             </Link>
           </nav>
 
-          <Link to="/wishlist">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative hidden sm:flex hover:bg-red-50 hover:text-red-500 rounded-xl transition-colors"
-            >
-              <Heart className="w-5 h-5 text-slate-600" />
-              {validWishlistItems.length > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-red-500 text-white border-white">
-                  {validWishlistItems.length}
-                </Badge>
-              )}
-            </Button>
-          </Link>
+          <div className="flex items-center gap-1">
+            <Link to="/wishlist">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative hidden sm:flex hover:bg-red-50 hover:text-red-500 rounded-xl transition-colors"
+              >
+                <Heart className="w-5 h-5 text-slate-600" />
+                {validWishlistItems.length > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-red-500 text-white border-white">
+                    {validWishlistItems.length}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
 
-          <CartDrawer>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative hover:bg-primary/10 hover:text-primary rounded-xl transition-colors"
-            >
-              <ShoppingBag className="w-5 h-5 text-slate-600" />
-              {totalItems > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-primary text-white border-white">
-                  {totalItems}
-                </Badge>
-              )}
-            </Button>
-          </CartDrawer>
+            <CartDrawer>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative hover:bg-primary/10 hover:text-primary rounded-xl transition-colors"
+              >
+                <ShoppingBag className="w-5 h-5 text-slate-600" />
+                {totalItems > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-primary text-white border-white">
+                    {totalItems}
+                  </Badge>
+                )}
+              </Button>
+            </CartDrawer>
+          </div>
 
           {/* Mobile Menu */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -124,6 +133,7 @@ export default function Header() {
                 <SheetTitle className="text-left flex items-center gap-2">
                   <Hexagon className="w-6 h-6 text-primary fill-current" /> PapercraftRP
                 </SheetTitle>
+                <SheetDescription className="sr-only">Menu de navegação mobile.</SheetDescription>
               </SheetHeader>
               <form
                 onSubmit={(e) => {

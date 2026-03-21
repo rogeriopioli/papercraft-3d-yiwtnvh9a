@@ -37,16 +37,31 @@ export default function ProductCard({ product, className }: ProductCardProps) {
   }
 
   const isFavorite = hasItem(product.id)
+  const hasSecondaryImage = product.images && product.images.length > 1
 
   return (
-    <Link to={`/product/${product.id}`} className={cn('group block h-full', className)}>
+    <Link to={`/product/${product.id}`} className={cn('group/card block h-full', className)}>
       <Card className="overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white h-full flex flex-col rounded-2xl relative">
-        <div className="relative aspect-square overflow-hidden bg-slate-100 p-4 flex items-center justify-center">
-          <img
-            src={product.images?.[0]}
-            alt={product.title}
-            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-105 rounded-xl shadow-sm"
-          />
+        <div className="relative aspect-square overflow-hidden bg-slate-100 p-4 flex items-center justify-center group/img">
+          <div className="relative w-full h-full rounded-xl overflow-hidden shadow-sm">
+            <img
+              src={product.images?.[0]}
+              alt={product.title}
+              className={cn(
+                'absolute inset-0 w-full h-full object-cover transition-all duration-500',
+                hasSecondaryImage
+                  ? 'group-hover/img:opacity-0'
+                  : 'group-hover/img:scale-110 group-hover/img:brightness-105',
+              )}
+            />
+            {hasSecondaryImage && (
+              <img
+                src={product.images[1]}
+                alt={`${product.title} vista 2`}
+                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover/img:opacity-100 group-hover/img:scale-110 transition-all duration-500"
+              />
+            )}
+          </div>
 
           {/* Top Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2 z-20">
@@ -78,7 +93,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
 
         <CardContent className="p-5 flex flex-col flex-1 relative z-10 bg-white">
           <div className="flex justify-between items-start mb-2 gap-2">
-            <h3 className="font-heading font-bold text-lg leading-tight text-slate-900 line-clamp-2">
+            <h3 className="font-heading font-bold text-lg leading-tight text-slate-900 line-clamp-2 group-hover/card:text-primary transition-colors">
               {product.title}
             </h3>
           </div>
