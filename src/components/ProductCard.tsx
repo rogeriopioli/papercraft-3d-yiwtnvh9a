@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Star, Heart } from 'lucide-react'
+import { Star, Heart, ShoppingCart } from 'lucide-react'
 import { Product } from '@/data/products'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -42,9 +42,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
   return (
     <Link to={`/product/${product.id}`} className={cn('group/card block h-full', className)}>
       <Card className="overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white h-full flex flex-col rounded-2xl relative">
-        {/* Strictly separated image container with aspect ratio to prevent layout jumping */}
         <div className="relative w-full aspect-[4/3] sm:aspect-square overflow-hidden bg-slate-50 shrink-0 group/img">
-          {/* Primary Image */}
           <img
             src={product.images?.[0] || 'https://img.usecurling.com/p/400/400?q=papercraft'}
             alt={product.title}
@@ -56,7 +54,6 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             )}
           />
 
-          {/* Secondary Image */}
           {hasSecondaryImage && (
             <img
               src={product.images[1]}
@@ -65,7 +62,6 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             />
           )}
 
-          {/* Top Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
             {product.isBestSeller && (
               <Badge className="bg-orange-500 hover:bg-orange-600 text-white border-none rounded-full px-3 shadow-sm font-bold">
@@ -79,7 +75,6 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             )}
           </div>
 
-          {/* Interactive Heart Icon */}
           <button
             onClick={handleToggleWishlist}
             className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full text-slate-300 hover:text-red-500 hover:bg-white transition-all z-10 shadow-sm hover:scale-110"
@@ -93,7 +88,6 @@ export default function ProductCard({ product, className }: ProductCardProps) {
           </button>
         </div>
 
-        {/* Content Area - Flex column layout guarantees no overlapping */}
         <CardContent className="p-5 flex flex-col flex-1 bg-white relative z-20">
           <h3 className="font-heading font-bold text-lg leading-tight text-slate-900 line-clamp-2 mb-2 group-hover/card:text-primary transition-colors">
             {product.title}
@@ -106,15 +100,16 @@ export default function ProductCard({ product, className }: ProductCardProps) {
 
           <p className="text-sm text-slate-500 mb-4 font-medium">{product.category}</p>
 
-          <div className="mt-auto flex flex-col gap-4">
-            <span className="font-black text-2xl text-primary">
+          <div className="mt-auto flex items-center justify-between gap-3 pt-4 border-t border-slate-50">
+            <span className="font-black text-xl text-primary truncate">
               R$ {product.price.toFixed(2).replace('.', ',')}
             </span>
             <Button
-              className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl h-12 text-base font-bold shadow-sm hover:shadow-md transition-all active:scale-95 relative z-30"
+              className="shrink-0 bg-primary hover:bg-primary/90 text-white rounded-xl h-10 px-4 text-sm font-bold shadow-sm hover:shadow-md transition-all active:scale-95 relative z-30"
               onClick={handleAddToCart}
             >
-              Adicionar ao carrinho
+              <ShoppingCart className="w-4 h-4 mr-1.5 sm:hidden lg:block xl:hidden 2xl:block" />
+              Adicionar
             </Button>
           </div>
         </CardContent>

@@ -14,16 +14,10 @@ import Wishlist from './pages/Wishlist'
 import FAQ from './pages/FAQ'
 import AdminLayout from './pages/admin/AdminLayout'
 import Dashboard from './pages/admin/Dashboard'
-import {
-  AdminProducts,
-  AdminOrders,
-  AdminUsers,
-  AdminCoupons,
-  AdminCategories,
-  AdminEmails,
-  AdminKB,
-  AdminChat,
-} from './pages/admin/Views'
+import AdminProducts from './pages/admin/AdminProducts'
+import AdminOrders from './pages/admin/AdminOrders'
+import AdminUsers from './pages/admin/AdminUsers'
+import { AdminCoupons, AdminCategories, AdminEmails, AdminKB, AdminChat } from './pages/admin/Views'
 import Layout from './components/Layout'
 import { CartProvider } from './stores/useCartStore'
 import { WishlistProvider } from './stores/useWishlistStore'

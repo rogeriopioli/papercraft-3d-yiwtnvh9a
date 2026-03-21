@@ -5,6 +5,8 @@ export interface User {
   email: string
   name: string
   created: string
+  downloads_count?: number
+  downloads_limit?: number
 }
 
 export const getUsers = async () => {

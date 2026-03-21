@@ -12,9 +12,6 @@ export function AdminPlaceholder({ title }: { title: string }) {
   )
 }
 
-export const AdminProducts = () => <AdminPlaceholder title="Gerenciar Produtos" />
-export const AdminOrders = () => <AdminPlaceholder title="Gerenciar Pedidos" />
-export const AdminUsers = () => <AdminPlaceholder title="Gerenciar Usuários" />
 export const AdminCoupons = () => <AdminPlaceholder title="Gerenciar Cupons" />
 export const AdminCategories = () => <AdminPlaceholder title="Gerenciar Categorias" />
 export const AdminEmails = () => <AdminPlaceholder title="Gerenciar E-mails" />
