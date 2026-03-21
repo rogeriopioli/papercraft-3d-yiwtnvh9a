@@ -1,6 +1,13 @@
 import { useState, useMemo } from 'react'
 import { useSearchParams, useNavigate, Link } from 'react-router-dom'
-import { CreditCard, Lock, CheckCircle2, ChevronRight, ShoppingBag } from 'lucide-react'
+import {
+  CreditCard,
+  Lock,
+  CheckCircle2,
+  ChevronRight,
+  ShoppingBag,
+  BadgePercent,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -8,6 +15,7 @@ import { Separator } from '@/components/ui/separator'
 import { useToast } from '@/hooks/use-toast'
 import useCartStore from '@/stores/useCartStore'
 import useProductStore from '@/stores/useProductStore'
+import { getSubscriberByEmail, updateSubscriberCouponUsed } from '@/services/subscribers'
 
 export default function Checkout() {
   const [searchParams] = useSearchParams()
@@ -20,6 +28,12 @@ export default function Checkout() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  const [email, setEmail] = useState('')
+  const [discountStatus, setDiscountStatus] = useState<
+    'idle' | 'checking' | 'valid' | 'invalid' | 'used'
+  >('idle')
+  const [subscriberId, setSubscriberId] = useState<string | null>(null)
+
   const checkoutItems = useMemo(() => {
     if (productId) {
       const product = products.find((p) => p.id === productId)
@@ -28,7 +42,30 @@ export default function Checkout() {
     return cartItems
   }, [productId, cartItems, products])
 
-  const total = checkoutItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const subtotal = checkoutItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const discountAmount = discountStatus === 'valid' ? subtotal * 0.1 : 0
+  const total = subtotal - discountAmount
+
+  const checkCoupon = async () => {
+    if (!email) return
+    setDiscountStatus('checking')
+    try {
+      const record = await getSubscriberByEmail(email)
+      if (record) {
+        if (!record.coupon_used) {
+          setDiscountStatus('valid')
+          setSubscriberId(record.id)
+          toast({ title: 'Oba!', description: '10% de desconto ativado com sucesso.' })
+        } else {
+          setDiscountStatus('used')
+          setSubscriberId(null)
+        }
+      }
+    } catch (e) {
+      setDiscountStatus('invalid')
+      setSubscriberId(null)
+    }
+  }
 
   if (isLoadingProducts) {
     return (
@@ -53,9 +90,18 @@ export default function Checkout() {
     )
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+
+    if (subscriberId && discountStatus === 'valid') {
+      try {
+        await updateSubscriberCouponUsed(subscriberId)
+      } catch (err) {
+        console.error('Failed to update coupon status', err)
+      }
+    }
+
     setTimeout(() => {
       setIsLoading(false)
       setIsSuccess(true)
@@ -71,7 +117,7 @@ export default function Checkout() {
 
   if (isSuccess) {
     return (
-      <div className="container mx-auto px-4 py-20 text-center max-w-lg animate-in fade-in zoom-in duration-500 mt-12 bg-emerald-50 rounded-3xl border-2 border-emerald-100">
+      <div className="container mx-auto px-4 py-20 text-center max-w-lg animate-in fade-in zoom-in duration-500 mt-12 bg-emerald-50 rounded-3xl border-2 border-emerald-100 shadow-sm">
         <CheckCircle2 className="w-24 h-24 text-emerald-500 mx-auto mb-6 drop-shadow-sm" />
         <h1 className="text-4xl font-heading font-black mb-4 text-emerald-900">Sucesso!</h1>
         <p className="text-emerald-800 font-medium mb-8 text-lg leading-relaxed">
@@ -81,7 +127,7 @@ export default function Checkout() {
         <Button
           size="lg"
           onClick={() => navigate('/')}
-          className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold h-14 text-lg"
+          className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold h-14 text-lg shadow-sm"
         >
           Explorar Mais Modelos
         </Button>
@@ -123,17 +169,37 @@ export default function Checkout() {
                     className="h-14 rounded-xl bg-slate-50 text-lg border-slate-200 focus-visible:ring-primary"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 relative">
                   <Label htmlFor="email" className="font-bold text-slate-700">
-                    E-mail para Recebimento
+                    E-mail para Recebimento e Desconto
                   </Label>
                   <Input
                     id="email"
                     required
                     type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value)
+                      setDiscountStatus('idle')
+                      setSubscriberId(null)
+                    }}
+                    onBlur={checkCoupon}
                     placeholder="joao@exemplo.com"
                     className="h-14 rounded-xl bg-slate-50 text-lg border-slate-200 focus-visible:ring-primary"
                   />
+                  {discountStatus === 'checking' && (
+                    <p className="text-sm text-slate-500 mt-2 font-medium">Verificando e-mail...</p>
+                  )}
+                  {discountStatus === 'valid' && (
+                    <p className="text-sm text-emerald-600 font-bold mt-2 flex items-center gap-1">
+                      <BadgePercent className="w-4 h-4" /> Desconto de Primeira Compra ativado!
+                    </p>
+                  )}
+                  {discountStatus === 'used' && (
+                    <p className="text-sm text-orange-600 font-medium mt-2">
+                      O desconto de primeira compra já foi utilizado para este e-mail.
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -219,8 +285,14 @@ export default function Checkout() {
             <div className="space-y-4 mb-8">
               <div className="flex justify-between items-center text-slate-600 font-bold">
                 <span>Subtotal</span>
-                <span>R$ {total.toFixed(2).replace('.', ',')}</span>
+                <span>R$ {subtotal.toFixed(2).replace('.', ',')}</span>
               </div>
+              {discountStatus === 'valid' && (
+                <div className="flex justify-between items-center text-emerald-600 font-bold">
+                  <span>Desconto (10%)</span>
+                  <span>- R$ {discountAmount.toFixed(2).replace('.', ',')}</span>
+                </div>
+              )}
               <div className="flex justify-between items-center text-emerald-600 font-bold">
                 <span>Frete (Envio Digital)</span>
                 <span>Grátis</span>

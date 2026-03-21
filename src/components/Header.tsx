@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { Search, ShoppingBag, Heart, Hexagon, ShieldCheck } from 'lucide-react'
+import { Search, ShoppingBag, Heart, Hexagon, ShieldCheck, Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '@/components/ui/sheet'
 import useCartStore from '@/stores/useCartStore'
 import useWishlistStore from '@/stores/useWishlistStore'
 import useProductStore from '@/stores/useProductStore'
-import useAuthStore from '@/stores/useAuthStore'
 import CartDrawer from './CartDrawer'
 
 export default function Header() {
@@ -17,9 +17,9 @@ export default function Header() {
   const { totalItems } = useCartStore()
   const { items: wishlistItems } = useWishlistStore()
   const { products } = useProductStore()
-  const { isAuthenticated } = useAuthStore()
 
   const [searchValue, setSearchValue] = useState('')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const validWishlistItems = wishlistItems.filter((id) => products.some((p) => p.id === id))
 
@@ -27,7 +27,8 @@ export default function Header() {
     setSearchValue(searchParams.get('search') || '')
   }, [searchParams])
 
-  const handleSearch = () => {
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e) e.preventDefault()
     if (searchValue.trim()) {
       navigate(`/?search=${encodeURIComponent(searchValue.trim())}`)
     } else {
@@ -37,103 +38,129 @@ export default function Header() {
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4 py-3">
-        {/* Top Row: Navigation, Centered Logo, Actions */}
-        <div className="flex items-center justify-between mb-4">
-          {/* Left - Navigation / Admin Shield */}
-          <div className="w-1/3 flex items-center gap-4">
-            {isAuthenticated ? (
-              <Link
-                to="/admin"
-                className="flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors"
-                title="Acessar Admin"
-              >
-                <div className="bg-blue-50 p-2 rounded-xl">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <span className="hidden sm:inline">Painel Admin</span>
-              </Link>
-            ) : (
-              <Link
-                to="/admin"
-                className="text-slate-400 hover:text-primary transition-colors flex items-center gap-2"
-                title="Acessar Admin"
-              >
-                <ShieldCheck className="w-5 h-5" />
-              </Link>
-            )}
+      <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between gap-4">
+        {/* Left - Logo */}
+        <Link to="/" className="flex items-center gap-2 group shrink-0">
+          <div className="bg-primary text-white p-2 md:p-2.5 rounded-xl group-hover:scale-105 transition-transform shadow-md">
+            <Hexagon className="w-5 h-5 md:w-6 md:h-6 fill-current" />
           </div>
+          <span className="font-heading font-black text-xl md:text-2xl text-slate-800 tracking-tight">
+            PapercraftRP
+          </span>
+        </Link>
 
-          {/* Center - Logo */}
-          <div className="w-1/3 flex justify-center">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="bg-primary text-white p-2.5 rounded-xl group-hover:scale-105 transition-transform shadow-md">
-                <Hexagon className="w-6 h-6 fill-current" />
-              </div>
-              <span className="font-heading font-black text-2xl text-slate-800 tracking-tight hidden sm:block">
-                PapercraftRP
-              </span>
-            </Link>
-          </div>
-
-          {/* Right - Actions */}
-          <div className="w-1/3 flex justify-end gap-2">
-            <Link to="/wishlist">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative hidden sm:flex hover:bg-blue-50 hover:text-primary rounded-xl"
-              >
-                <Heart className="w-5 h-5 text-slate-600" />
-                {validWishlistItems.length > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-primary text-white border-white">
-                    {validWishlistItems.length}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
-
-            <CartDrawer>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative hover:bg-blue-50 hover:text-primary rounded-xl"
-              >
-                <ShoppingBag className="w-5 h-5 text-slate-600" />
-                {totalItems > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-primary text-white border-white">
-                    {totalItems}
-                  </Badge>
-                )}
-              </Button>
-            </CartDrawer>
-          </div>
-        </div>
-
-        {/* Bottom Row: Centered Search Bar */}
-        <div className="max-w-xl mx-auto pb-1">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              handleSearch()
-            }}
-            className="relative"
-          >
+        {/* Center - Search (Desktop) */}
+        <div className="hidden lg:flex flex-1 max-w-md mx-8">
+          <form onSubmit={handleSearch} className="relative w-full">
             <button
               type="submit"
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors z-10"
-              aria-label="Buscar"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
             </button>
             <Input
               type="search"
-              placeholder="Buscar modelos, animais, decoração..."
-              className="w-full pl-12 h-12 rounded-full bg-slate-50 border-slate-200 focus-visible:ring-primary focus-visible:bg-white shadow-inner transition-all text-base"
+              placeholder="Buscar modelos..."
+              className="w-full pl-11 h-11 rounded-full bg-slate-50 border-slate-200 focus-visible:ring-primary shadow-inner font-medium"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />
           </form>
+        </div>
+
+        {/* Right - Navigation & Icons */}
+        <div className="flex items-center gap-2 md:gap-4 shrink-0">
+          <nav className="hidden md:flex items-center gap-6 font-bold text-[15px] text-slate-600 mr-2">
+            <Link to="/" className="hover:text-primary transition-colors">
+              Home
+            </Link>
+            <Link to="/como-montar" className="hover:text-primary transition-colors">
+              Como Montar
+            </Link>
+            <Link to="/sobre" className="hover:text-primary transition-colors">
+              Sobre
+            </Link>
+          </nav>
+
+          <Link to="/wishlist">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative hidden sm:flex hover:bg-red-50 hover:text-red-500 rounded-xl transition-colors"
+            >
+              <Heart className="w-5 h-5 text-slate-600" />
+              {validWishlistItems.length > 0 && (
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-red-500 text-white border-white">
+                  {validWishlistItems.length}
+                </Badge>
+              )}
+            </Button>
+          </Link>
+
+          <CartDrawer>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative hover:bg-primary/10 hover:text-primary rounded-xl transition-colors"
+            >
+              <ShoppingBag className="w-5 h-5 text-slate-600" />
+              {totalItems > 0 && (
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] animate-in zoom-in bg-primary text-white border-white">
+                  {totalItems}
+                </Badge>
+              )}
+            </Button>
+          </CartDrawer>
+
+          {/* Mobile Menu */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden rounded-xl">
+                <Menu className="w-6 h-6 text-slate-700" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px]">
+              <SheetHeader className="mb-8">
+                <SheetTitle className="text-left flex items-center gap-2">
+                  <Hexagon className="w-6 h-6 text-primary fill-current" /> PapercraftRP
+                </SheetTitle>
+              </SheetHeader>
+              <form
+                onSubmit={(e) => {
+                  handleSearch(e)
+                  setMobileMenuOpen(false)
+                }}
+                className="relative w-full mb-8 lg:hidden"
+              >
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Input
+                  type="search"
+                  placeholder="Buscar modelos..."
+                  className="w-full pl-9 h-12 rounded-xl bg-slate-50 font-medium"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </form>
+              <nav className="flex flex-col gap-6 font-bold text-lg text-slate-700">
+                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                  Home
+                </Link>
+                <Link to="/como-montar" onClick={() => setMobileMenuOpen(false)}>
+                  Como Montar
+                </Link>
+                <Link to="/sobre" onClick={() => setMobileMenuOpen(false)}>
+                  Sobre
+                </Link>
+                <Link
+                  to="/wishlist"
+                  className="flex items-center gap-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Heart className="w-5 h-5" /> Lista de Desejos
+                </Link>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import ProductCard from '@/components/ProductCard'
 import FilterBar from '@/components/FilterBar'
@@ -14,7 +14,7 @@ export default function Index() {
   const [filters, setFilters] = useState({
     category: 'Todos',
     sort: 'relevantes',
-    priceRange: [0, 200],
+    maxPrice: 200,
     difficulty: null as number | null,
   })
 
@@ -43,7 +43,7 @@ export default function Index() {
       result = result.filter((p) => p.category === filters.category)
     }
 
-    result = result.filter((p) => p.price <= filters.priceRange[1])
+    result = result.filter((p) => p.price <= filters.maxPrice)
 
     if (filters.difficulty !== null) {
       result = result.filter((p) => p.difficulty === filters.difficulty)
@@ -85,11 +85,11 @@ export default function Index() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-slate-50 rounded-3xl mt-8 border border-slate-100">
-          <h3 className="text-2xl font-heading font-bold mb-3 text-slate-800">
+        <div className="text-center py-20 bg-slate-50 rounded-3xl mt-8 border border-slate-100 shadow-sm">
+          <h3 className="text-2xl font-heading font-black mb-3 text-slate-800">
             Nenhum modelo encontrado
           </h3>
-          <p className="text-slate-500 mb-6 text-lg">
+          <p className="text-slate-500 mb-6 text-lg font-medium">
             Tente ajustar seus filtros ou realizar uma nova busca para ver mais resultados.
           </p>
           <Button
@@ -103,7 +103,7 @@ export default function Index() {
               setFilters({
                 category: 'Todos',
                 sort: 'relevantes',
-                priceRange: [0, 200],
+                maxPrice: 200,
                 difficulty: null,
               })
             }}

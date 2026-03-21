@@ -17,7 +17,7 @@ import useCategoryStore from '@/stores/useCategoryStore'
 interface FilterState {
   category: string
   sort: string
-  priceRange: number[]
+  maxPrice: number
   difficulty: number | null
 }
 
@@ -29,10 +29,8 @@ interface FilterBarProps {
 export default function FilterBar({ filters, setFilters }: FilterBarProps) {
   const { categories } = useCategoryStore()
 
-  // Ensure "Todos" is always available even if backend categories aren't loaded yet
   const displayCategories = ['Todos', ...categories.map((c) => c.name)]
 
-  // Fallback static categories if backend hasn't responded yet, to keep UI smooth
   const safeCategories =
     displayCategories.length > 1
       ? displayCategories
@@ -40,7 +38,6 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
 
   return (
     <div className="flex flex-col xl:flex-row gap-6 justify-between items-center mb-8">
-      {/* Categories Horizontal Scroll - Pill Style */}
       <div className="w-full xl:w-auto overflow-x-auto pb-2 xl:pb-0 hide-scrollbar flex gap-3 items-center justify-center xl:justify-start">
         {safeCategories.map((cat) => (
           <Button
@@ -60,7 +57,6 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
       </div>
 
       <div className="w-full xl:w-auto flex items-center gap-3 justify-between xl:justify-end shrink-0">
-        {/* Advanced Filters Sheet */}
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -69,7 +65,7 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
             >
               <SlidersHorizontal className="w-5 h-5 text-primary" />
               Filtros
-              {(filters.priceRange[1] < 200 || filters.difficulty) && (
+              {(filters.maxPrice < 200 || filters.difficulty) && (
                 <span className="w-2.5 h-2.5 rounded-full bg-primary absolute top-2 right-2 border-2 border-white"></span>
               )}
             </Button>
@@ -82,29 +78,25 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
             </SheetHeader>
 
             <div className="space-y-10">
-              {/* Price Range */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <Label className="text-base font-bold text-slate-700">Preço Máximo</Label>
-                  <span className="font-black text-xl text-primary">
-                    R$ {filters.priceRange[1]}
-                  </span>
+                  <span className="font-black text-xl text-primary">R$ {filters.maxPrice}</span>
                 </div>
                 <Slider
                   defaultValue={[200]}
                   max={200}
                   step={10}
-                  value={filters.priceRange}
-                  onValueChange={(val) => setFilters((prev) => ({ ...prev, priceRange: val }))}
+                  value={[filters.maxPrice]}
+                  onValueChange={(val) => setFilters((prev) => ({ ...prev, maxPrice: val[0] }))}
                   className="py-4"
                 />
                 <div className="flex justify-between text-sm font-medium text-slate-400">
                   <span>R$ 0</span>
-                  <span>R$ 200+</span>
+                  <span>R$ 200</span>
                 </div>
               </div>
 
-              {/* Difficulty */}
               <div className="space-y-4">
                 <Label className="text-base font-bold text-slate-700">Nível de Dificuldade</Label>
                 <div className="flex flex-wrap gap-3">
@@ -134,9 +126,7 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
               <Button
                 variant="secondary"
                 className="w-full h-12 text-base font-bold rounded-xl"
-                onClick={() =>
-                  setFilters((prev) => ({ ...prev, priceRange: [0, 200], difficulty: null }))
-                }
+                onClick={() => setFilters((prev) => ({ ...prev, maxPrice: 200, difficulty: null }))}
               >
                 Limpar Filtros
               </Button>
@@ -144,7 +134,6 @@ export default function FilterBar({ filters, setFilters }: FilterBarProps) {
           </SheetContent>
         </Sheet>
 
-        {/* Sort */}
         <div className="flex items-center gap-2">
           <Select
             value={filters.sort}
